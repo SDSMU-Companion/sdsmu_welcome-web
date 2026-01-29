@@ -36,7 +36,7 @@ title: 学习方面
 4. 成绩及格即可取得该科的学分与绩点，否则需要补考或重修
 5. 平均成绩只计入必修课与专业限定选修课的成绩，计算方式略
 
-<FigureImage src="/resources/study/单科成绩计算.svg" title="单科成绩计算" />
+<FigureImage src="/resources/study/单科成绩计算.svg" title="单科成绩计算"></FigureImage>
 
 ### 绩点
 
@@ -68,7 +68,7 @@ title: 学习方面
 因不同学制、学院、年级要求各不相同，下图仅以**2021 级临床医学院临床医学系普通 5 年制本科**为例，其他内容请参阅对应的“培养方案”。如需下载，请参考[此处](/in_school/tutorial/study_related.md#training_scheme_download)的说明
 :::
 
-<FigureImage src="/resources/study/学分.svg" title="学分组成表" />
+<FigureImage src="/resources/study/学分.svg" title="学分组成表" ></FigureImage>
 
 ### 留学、国际交流
 
@@ -117,7 +117,7 @@ title: 学习方面
 ### 个人综测
 
 1. 综测的组成成分见下图
-   <FigureImage src="/resources/study/综测组成表.svg" title="综测分数组成表" />
+   <FigureImage src="/resources/study/综测组成表.svg" title="综测分数组成表" ></FigureImage>
 2. 关于学业水平（GPA）计算的内容详见上述[绩点](/in_school/life/study.md#绩点)部分，不再赘述
 3. 综测每学期计算一次，一般于开学后一个月内完成
 4. 详细的分数加减计算方式以学生手册及各学院的个性化制度、通知等相关文件为准，此处不再赘述
