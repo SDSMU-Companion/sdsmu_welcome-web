@@ -42,3 +42,5 @@ yarn-error.log*
 next-env.d.ts
 md_files/markdown-examples.md
 md_files/.vuepress/dist
+
+*.7z
