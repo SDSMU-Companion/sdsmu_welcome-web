@@ -1,4 +1,5 @@
 ---
+title: 首页
 home: true
 heroText: "山东第二医科大学指南 SDSMU-Companion"
 tagline: 欢迎通过下方按钮反馈问题或建议

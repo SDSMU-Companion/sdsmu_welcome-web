@@ -1,3 +1,7 @@
+---
+title: 其它推荐的资源
+---
+
 ## 电脑基本操作
 
 1. [你缺失的那门计算机课](https://www.criwits.top/missing/)

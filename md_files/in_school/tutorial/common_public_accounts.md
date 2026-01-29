@@ -1,3 +1,7 @@
+---
+title: 常用公众号
+---
+
 <!-- 微信公众号头像下载API： `https://open.weixin.qq.com/qr/code?username=XXX` -->
 ::: note 说明
 

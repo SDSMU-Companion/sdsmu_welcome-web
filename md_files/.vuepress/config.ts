@@ -8,7 +8,7 @@ import { markdownStylizePlugin } from "@vuepress/plugin-markdown-stylize";
 import { markdownMathPlugin } from "@vuepress/plugin-markdown-math";
 
 export default defineUserConfig({
-  base: '/',
+  base: "/",
   bundler: viteBundler(),
   lang: "zh-CN",
   title: "山东第二医科大学指南 SDSMU-Companion",
@@ -190,7 +190,7 @@ export default defineUserConfig({
           },
           {
             text: "学习类教程",
-            link: "/in_school/tutorial/study.md",
+            link: "/in_school/tutorial/study_related.md",
           },
           {
             text: "其它",
@@ -253,8 +253,36 @@ export default defineUserConfig({
   plugins: [
     slimsearchPlugin({
       indexContent: true,
-      suggestion: true,
+      suggestion: false,
+      queryHistoryCount: 0,
+      resultHistoryCount: 0,
       hotKeys: [{ key: "f", ctrl: true }],
+      indexOptions: {
+        tokenize: (text, _fieldName) => {
+          const segmenter = new Intl.Segmenter("zh-CN", {
+            granularity: "word",
+          });
+          return (
+            Array.from(segmenter.segment(text))
+              // 过滤掉标点符号等非词汇内容，提高索引质量
+              .filter((token) => token.isWordLike)
+              .map((token) => token.segment.toLowerCase().trim())
+              .filter(Boolean)
+          );
+        },
+      },
+      filter: (page) => {
+        const excludedFiles = new Set(["CHANGELOG.md", "CHANGELOG_old.md"]);
+        const excludedPaths = new Set([
+          "/CHANGELOG.html",
+          "/CHANGELOG_old.html",
+        ]);
+        const filePath = page.filePathRelative?.replace(/\\/g, "/");
+        return !(
+          (filePath && excludedFiles.has(filePath)) ||
+          (page.path && excludedPaths.has(page.path))
+        );
+      },
       locales: {
         "/": {
           placeholder: "搜索",

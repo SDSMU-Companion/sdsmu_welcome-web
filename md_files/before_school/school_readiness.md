@@ -1,3 +1,7 @@
+---
+title: 入学准备
+---
+
 ## <span style="border-bottom:3px double red;color:red">必要证件及物品</span>
 
 1. <span style="border-bottom:3px double red;">**高考准考证、录取通知书[^1]**</span>（必须带！！！）

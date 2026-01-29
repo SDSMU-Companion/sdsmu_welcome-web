@@ -1,3 +1,7 @@
+---
+title: 学习类教程
+---
+
 ::: warning 警告
 
 1. 本节中所有标“㊕”的网址仅在连接校园网时可成功访问相关服务
@@ -144,7 +148,7 @@
 在临近期末考试时，因考试教室占用等原因查询结果可能不准确
 :::
 
-1. 根据 [CAS 认证系统登录教程](/in_school/tutorial/study.md#cas-资源访问控制系统校内-vpn)，登录山二医 app（下载链接[见此](/in_school/tutorial/common_app.md#sdsmu_app)）
+1. 根据 [CAS 认证系统登录教程](/in_school/tutorial/study_related.md#cas-资源访问控制系统校内-vpn)，登录山二医 app（下载链接[见此](/in_school/tutorial/common_app.md#sdsmu_app)）
 2. 点击下方菜单栏“应用”→ 空闲教室查询
 3. 点击右上角“〉”按钮 → 根据自己的需求进行筛选
 
@@ -177,7 +181,7 @@
 ## <span style="border-bottom:3px double red;">教务系统</span>
 
 ::: warning
-仅限校内访问，如需在外使用教务系统，参见[CAS 系统](/in_school/tutorial/study.md#cas-资源访问控制系统校内-vpn)条目
+仅限校内访问，如需在外使用教务系统，参见[CAS 系统](/in_school/tutorial/study_related.md#cas-资源访问控制系统校内-vpn)条目
 :::
 
 1. 官网：[https://jwgl.sdsmu.edu.cn$^㊕$](https://jwgl.sdsmu.edu.cn)
@@ -194,7 +198,7 @@
 
 1. 官网：[https://webvpn.sdsmu.edu.cn](https://webvpn.sdsmu.edu.cn)
 2. 说明：也称 CAS 认证系统、智慧校园系统，本系统主要用于**在校外访问校内网络信息资源**，如：教务系统（查成绩、课表）、知网[^2]、临床医学虚拟仿真实验中心等
-   [^2]: 查阅文献推荐使用 CARSI 系统，速度快效果好，教程[见此](./study.md#carsi-系统)
+   [^2]: 查阅文献推荐使用 CARSI 系统，速度快效果好，教程[见此](./study_related.md#carsi-系统)
 3. 异地登录教务系统教程（其它系统同理）：
 
    1. 打开网站，点击“统一身份认证登录”，使用学号+密码登录或手机号验证登陆、扫描登陆等方式均可（推荐绑定微信，初始密码为 sdsmu@身份证后六位）
@@ -245,7 +249,7 @@
    3. → 在“学风建设”类选择“学生缓考审批表”（或直接搜索“缓考”）
 2. 在教务处下载《[山东第二医科大学学生缓考审批表](https://jwch.sdsmu.edu.cn/_upload/article/files/f7/d0/c172c4f74eecba307f700cde1a21/99599310-0254-48be-adc5-fcafa99e7341.doc)》，打印 3 份并按照要求填写完毕
 3. 填写教务系统（详细步骤如下）
-   1. 进入教务系统（仅校园网，详情[见此](/in_school/tutorial/study.md#教务系统)）
+   1. 进入教务系统（仅校园网，详情[见此](/in_school/tutorial/study_related.md#教务系统)）
    2. 点击左侧菜单“考试报名”→“我的申请”→“缓考申请”
    3. → 选择“学年学期”和“活动名称”后，直接点击“搜索”（不要填写科目名称）
    4. → 在弹出的菜单中选择缓考科目并填写申请[^4]
@@ -286,8 +290,8 @@
    1. 携带身份证、手机前往 D205 旁的自助打印机（D 区位置参考[教学楼地图](/in_school/campus_fuyanshan/maps/map_ABCDEF.md)）
    2. 按照机器的说明填写相关信息并打印（无纸时请联系工作人员）
 3. 线上下载
-   1. 学籍证明：请按[校务行教程](./study.md#校务行-微信小程序)申请下载至邮箱中
-   2. 个人档案：按照[校务行教程](./study.md#校务行-微信小程序)申请并下载，自行前往打印店打印即可（请注意及时删除打印完毕的文件以免泄漏隐私）
+   1. 学籍证明：请按[校务行教程](./study_related.md#校务行-微信小程序)申请下载至邮箱中
+   2. 个人档案：按照[校务行教程](./study_related.md#校务行-微信小程序)申请并下载，自行前往打印店打印即可（请注意及时删除打印完毕的文件以免泄漏隐私）
 
 ## 培养方案查询、下载
 

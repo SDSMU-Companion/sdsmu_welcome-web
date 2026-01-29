@@ -1,3 +1,7 @@
+---
+title: 常用软件
+---
+
 ## 学校 App
 
 1. [山二医 App](http://ydxy.sdsmu.edu.cn/mobileapi_ydxy/open/goDownload)<span id="sdsmu_app"></span>
