@@ -316,9 +316,9 @@ title: 学习类教程
 以下文件均更新于 2026.01.08
 :::
 
-- <FileDownload name="临床医学专业培养方案（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/临床医学专业培养方案（2021级）〔2026.1.8更新〕.pdf" />
-- <FileDownload name="临床医学专业（公费）培养方案（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/临床医学专业（公费）培养方案（2021级）〔2026.1.8更新〕.pdf" />
-- <FileDownload name="培养方案（公共选修课）（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/培养方案（公共选修课）（2021级）〔2026.1.8更新〕.pdf" />
+- <FileDownload name="临床医学专业培养方案（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/临床医学专业培养方案（2021级）〔2026.1.8更新〕.pdf"></FileDownload>
+- <FileDownload name="临床医学专业（公费）培养方案（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/临床医学专业（公费）培养方案（2021级）〔2026.1.8更新〕.pdf"></FileDownload>
+- <FileDownload name="培养方案（公共选修课）（2021级）〔2026.1.8更新〕.pdf" href="/resources/study/培养方案（公共选修课）（2021级）〔2026.1.8更新〕.pdf"></FileDownload>
 
 ## 查收查引
 

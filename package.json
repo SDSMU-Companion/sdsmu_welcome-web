@@ -11,14 +11,15 @@
     "@vuepress/theme-default": "^2.0.0-rc.121",
     "sass-embedded": "^1.97.2",
     "vuepress": "^2.0.0-rc.26",
-    "vuepress-plugin-md-enhance": "^2.0.0-rc.102"
+    "vuepress-plugin-md-enhance": "^2.0.0-rc.102",
+    "@node-rs/jieba": "^2.0.1"
   },
   "scripts": {
     "docs:dev": "vuepress dev md_files",
     "docs:build": "vuepress build md_files"
   },
   "name": "sdsmu_welcome-web",
-  "version": "2026.01.29",
+  "version": "2026.01.30",
   "description": "本项目是山东第二医科大学指南的 Web 版本，包含[指南本体LaTex版](https://github.com/Mikachu2333/sdsmu_welcome_tex)与[指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex)的全部内容。",
   "main": "index.js",
   "author": "LinkChou",

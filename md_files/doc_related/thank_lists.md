@@ -2,7 +2,7 @@
 title: 致谢
 ---
 
-<Donate />
+<Donate></Donate>
 
 ## 特别感谢
 

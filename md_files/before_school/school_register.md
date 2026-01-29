@@ -26,7 +26,7 @@ title: 报到
 
 ## 浮烟山校区报到流程
 
-1. <span style="border-bottom:3px double red;">在“<QrCodeLink text="山东第二医科大学学生之家" qrcode="/resources/qrcodes/山东第二医科大学学生之家.jpg"/>”公众号进行**预报到**[^3]，并查询自己的宿舍编号、学号、班级、学院等信息</span>（教程详见[新生预报到部分](/in_school/tutorial/life.md#新生信息查询、线上报到)）
+1. <span style="border-bottom:3px double red;">在“<QrCodeLink text="山东第二医科大学学生之家" qrcode="/resources/qrcodes/山东第二医科大学学生之家.jpg"></QrCodeLink>”公众号进行**预报到**[^3]，并查询自己的宿舍编号、学号、班级、学院等信息</span>（教程详见[新生预报到部分](/in_school/tutorial/life.md#新生信息查询、线上报到)）
    [^3]: 公众号查询入口开放日期约为 8 月 15 日前后，每年不一
 2. 通过学校通知、各级学生会、贴吧或频道创建的官方群内指引或者等待各位带班学长学姐加好友后进入班级群[^4]
    [^4]: 若未能寻找到自己的班级，可在报到时通过带班学长学姐加入班级官群

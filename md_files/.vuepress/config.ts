@@ -2,10 +2,37 @@ import { defineUserConfig } from "vuepress";
 import { defaultTheme } from "@vuepress/theme-default";
 import { viteBundler } from "@vuepress/bundler-vite";
 import { slimsearchPlugin } from "@vuepress/plugin-slimsearch";
-import { markdownHintPlugin } from "@vuepress/plugin-markdown-hint";
 import { markdownExtPlugin } from "@vuepress/plugin-markdown-ext";
 import { markdownStylizePlugin } from "@vuepress/plugin-markdown-stylize";
 import { markdownMathPlugin } from "@vuepress/plugin-markdown-math";
+import { Jieba } from "@node-rs/jieba";
+import fs from "fs";
+import path from "path";
+
+// 读取自定义词典并创建jieba实例
+const loadJiebaWithCustomDict = () => {
+  const dictPath = path.join(__dirname, "custom-dict.txt");
+  if (!fs.existsSync(dictPath)) {
+    return new Jieba();
+  }
+  const content = fs.readFileSync(dictPath, "utf-8");
+  const words = content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .filter((line, index, self) => self.indexOf(line) === index);
+
+  if (words.length === 0) {
+    return new Jieba();
+  }
+
+  // withDict需要Buffer格式，每行一个词
+  const dictBuffer = Buffer.from(words.join("\n"), "utf-8");
+  return Jieba.withDict(dictBuffer);
+};
+
+// 初始化 jieba 实例
+const jieba = loadJiebaWithCustomDict();
 
 export default defineUserConfig({
   base: "/",
@@ -259,16 +286,8 @@ export default defineUserConfig({
       hotKeys: [{ key: "f", ctrl: true }],
       indexOptions: {
         tokenize: (text, _fieldName) => {
-          const segmenter = new Intl.Segmenter("zh-CN", {
-            granularity: "word",
-          });
-          return (
-            Array.from(segmenter.segment(text))
-              // 过滤掉标点符号等非词汇内容，提高索引质量
-              .filter((token) => token.isWordLike)
-              .map((token) => token.segment.toLowerCase().trim())
-              .filter(Boolean)
-          );
+          const cleanedText = text.replace(/[\p{P}\p{S}]/gu, " ");
+          return jieba.cutForSearch(cleanedText);
         },
       },
       filter: (page) => {
@@ -295,7 +314,6 @@ export default defineUserConfig({
         },
       ],
     }),
-    markdownHintPlugin({}),
     markdownExtPlugin({
       footnote: true,
     }),
