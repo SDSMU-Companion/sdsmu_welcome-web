@@ -75,6 +75,8 @@ title: 致谢
 
 [hyperref](https://github.com/latex3/hyperref)
 
+[T-Inker（321AID）](https://321aid.sdsmu.edu.cn/)
+
 ## 疑难问题帮助
 
 [GitHub CTeX Forum](https://github.com/CTeX-org/forum/issues)
