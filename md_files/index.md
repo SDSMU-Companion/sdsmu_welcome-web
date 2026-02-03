@@ -5,7 +5,7 @@ heroText: "山东第二医科大学指南 SDSMU-Companion"
 tagline: 欢迎通过下方按钮反馈问题或建议
 actions:
   - text: 开始阅读
-    link: ./doc_related/thank_lists.md
+    link: /doc_related/thank_lists.md
     type: primary
   - text: 邮件反馈
     link: mailto:linkchou@yandex.com
