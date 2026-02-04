@@ -28,7 +28,10 @@ const loadJiebaWithCustomDict = () => {
 
   // withDict需要Buffer格式，每行一个词
   const dictBuffer = Buffer.from(words.join("\n"), "utf-8");
-  return Jieba.withDict(dictBuffer);
+  // 使用默认词典并加载自定义词典
+  const jieba = new Jieba();
+  jieba.loadDict(dictBuffer);
+  return jieba;
 };
 
 // 初始化 jieba 实例
@@ -291,7 +294,8 @@ export default defineUserConfig({
             " ",
           );
           const cleanedText = textWithoutLinks.replace(/[\p{P}\p{S}]/gu, " ");
-          return jieba.cutAll(cleanedText);
+          const result = jieba.cutForSearch(cleanedText, true);
+          return result;
         },
       },
       filter: (page) => {
