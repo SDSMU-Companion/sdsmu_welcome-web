@@ -286,8 +286,12 @@ export default defineUserConfig({
       hotKeys: [{ key: "f", ctrl: true }],
       indexOptions: {
         tokenize: (text, _fieldName) => {
-          const cleanedText = text.replace(/[\p{P}\p{S}]/gu, " ");
-          return jieba.cutForSearch(cleanedText);
+          const textWithoutLinks = text.replace(
+            /https?:\/\/[^\s\]\)\$]+/g,
+            " ",
+          );
+          const cleanedText = textWithoutLinks.replace(/[\p{P}\p{S}]/gu, " ");
+          return jieba.cutAll(cleanedText);
         },
       },
       filter: (page) => {
