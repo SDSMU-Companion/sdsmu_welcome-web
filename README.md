@@ -95,3 +95,12 @@ sdsmu_welcome-web/
 ├── package.json              # 项目依赖配置
 └── README.md                 # 本文件
 ```
+
+## 依赖升级
+
+1. 安装 `ncu`
+   `npm install -g npm-check-updates`
+2. 查看可升级的package
+   `ncu`
+3. 升级packages
+   `ncu -u`
