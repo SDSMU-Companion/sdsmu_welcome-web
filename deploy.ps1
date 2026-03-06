@@ -17,6 +17,10 @@ function Exec {
 }
 
 try {
+    # 0. Push original project
+    Write-Host "Pushing original project..." -ForegroundColor Cyan
+    Exec { git push } "Failed to push original project"
+
     # 1. Build project
     Write-Host "Building project..." -ForegroundColor Cyan
     Exec { npm run docs:build } "Build failed"
