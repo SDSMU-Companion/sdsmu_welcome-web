@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - ".vscode/**"
+      - "CODE_OF_CONDUCT.md"
+      - "README.md"
+      - "deploy.ps1"
 
 permissions:
   contents: write
