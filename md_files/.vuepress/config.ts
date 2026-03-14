@@ -208,7 +208,11 @@ export default defineUserConfig({
       },
       {
         text: "就业指引",
-        link: "/in_school/further_education/employment.md",
+        link: "/in_school/further/employment.md",
+      },
+      {
+        text: "兼职指南",
+        link: "/in_school/further/sideline.md",
       },
       {
         text: "教程",

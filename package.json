@@ -1,4 +1,16 @@
 {
+  "version": "2026.3.16",
+  "name": "sdsmu_welcome-web",
+  "description": "本项目是山东第二医科大学指南的 Web 版本，包含[指南本体LaTex版](https://github.com/Mikachu2333/sdsmu_welcome_tex)与[指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex)的全部内容。",
+  "keywords": [
+    "山二医",
+    "指南",
+    "绩点",
+    "新生"
+  ],
+  "main": "index.js",
+  "author": "LinkChou",
+  "license": "MIT",
   "devDependencies": {
     "@mathjax/src": "^4.1.1",
     "@vuepress/bundler-vite": "^2.0.0-rc.26",
@@ -17,17 +29,5 @@
   "scripts": {
     "docs:dev": "vuepress dev md_files",
     "docs:build": "vuepress build md_files"
-  },
-  "name": "sdsmu_welcome-web",
-  "version": "2026.3.6",
-  "description": "本项目是山东第二医科大学指南的 Web 版本，包含[指南本体LaTex版](https://github.com/Mikachu2333/sdsmu_welcome_tex)与[指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex)的全部内容。",
-  "keywords": [
-    "山二医",
-    "指南",
-    "绩点",
-    "新生"
-  ],
-  "main": "index.js",
-  "author": "LinkChou",
-  "license": "MIT"
+  }
 }
