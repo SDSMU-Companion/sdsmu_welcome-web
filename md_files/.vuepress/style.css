@@ -1,10 +1,12 @@
 :root {
   /* Adapt VitePress variables to VuePress or define them */
-  --font-family: "Noto Sans SC", -apple-system, "Source Han Sans SC",
-    "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "MiSans L3",
-    "HarmonyOS Sans", "Segoe UI", sans-serif;
-  --font-family-code: "JetBrains Mono", "Fira Code", "Consolas", "Monaco",
-    "Andale Mono", "Ubuntu Mono", monospace, sans-serif;
+  --font-family:
+    "Noto Sans SC", -apple-system, "Source Han Sans SC", "PingFang SC",
+    "Microsoft YaHei", "WenQuanYi Micro Hei", "MiSans L3", "HarmonyOS Sans",
+    "Segoe UI", sans-serif;
+  --font-family-code:
+    "JetBrains Mono", "Fira Code", "Consolas", "Monaco", "Andale Mono",
+    "Ubuntu Mono", monospace, sans-serif;
 
   /* VuePress variables */
   --c-brand: #3451b2; /* Indigo from VitePress config */
@@ -20,20 +22,52 @@
   --vp-c-red-1: #b8272c;
   --vp-c-red-soft: rgba(244, 63, 94, 0.14);
   --vp-c-text-1: #3c3c43;
+  --content-text-regular: #3c3c43;
+  --content-text-strong: #1f2328;
 
   /* Anchor highlight (light) */
   --anchor-highlight-bg: #fff3cd;
 }
 
 /* Dark mode overrides */
-html.dark {
+html.dark,
+html[data-theme="dark"],
+:root[data-theme="dark"] {
   --anchor-highlight-bg: rgba(255, 235, 150, 0.28);
+  --content-text-regular: rgba(235, 238, 245, 0.88);
+  --content-text-strong: rgba(255, 255, 255, 0.90);
 }
 
 /* Adapt selectors */
 .theme-default-content {
   font-size: 16px;
   line-height: 2;
+}
+
+.theme-default-content,
+main.vp-page > [vp-content] {
+  color: var(--content-text-regular);
+}
+
+.theme-default-content strong,
+.theme-default-content b,
+.theme-default-content th,
+.theme-default-content h1,
+.theme-default-content h2,
+.theme-default-content h3,
+.theme-default-content h4,
+.theme-default-content h5,
+.theme-default-content h6,
+main.vp-page > [vp-content] strong,
+main.vp-page > [vp-content] b,
+main.vp-page > [vp-content] th,
+main.vp-page > [vp-content] h1,
+main.vp-page > [vp-content] h2,
+main.vp-page > [vp-content] h3,
+main.vp-page > [vp-content] h4,
+main.vp-page > [vp-content] h5,
+main.vp-page > [vp-content] h6 {
+  color: var(--content-text-strong);
 }
 
 /* 正文/列表断词：不改行高，避免影响普通正文 */
@@ -228,4 +262,19 @@ main.vp-page > [vp-content] ol ol ol ol > li::before {
 .theme-default-content a:not(.header-anchor):visited,
 main.vp-page > [vp-content] a:not(.header-anchor):visited {
   color: #003399;
+}
+
+html.dark .theme-default-content a:not(.header-anchor):visited,
+html.dark main.vp-page > [vp-content] a:not(.header-anchor):visited,
+html[data-theme="dark"] .theme-default-content a:not(.header-anchor):visited,
+html[data-theme="dark"]
+  main.vp-page
+  > [vp-content]
+  a:not(.header-anchor):visited,
+:root[data-theme="dark"] .theme-default-content a:not(.header-anchor):visited,
+:root[data-theme="dark"]
+  main.vp-page
+  > [vp-content]
+  a:not(.header-anchor):visited {
+  color: #8cb4ff;
 }
