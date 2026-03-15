@@ -1,0 +1,2 @@
+# 兼容 GitHub Pages 的路径，将 /sdsmu_welcome-web/* 重写到根目录
+/sdsmu_welcome-web/*  /:splat  200
