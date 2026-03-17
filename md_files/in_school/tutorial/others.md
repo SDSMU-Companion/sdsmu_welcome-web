@@ -545,7 +545,7 @@ title: 不便分类的教程
 - 5 ～ 7 分：请参考全能本
 - 8 分及以上：请参考游戏本
 
-详细选购指南可参考[【小白必看】笔记本电脑选购指南](https://mp.weixin.qq.com/s/-n8za4MWqP3sjOOpMhIWbg)
+详细选购指南可参考[【小白必看】笔记本电脑选购指南](https://mp.weixin.qq.com/s/AYoSd95b-1hIidoGVIztJQ)
 
 ## 教育部认可的全国大学生学科竞赛 A 类竞赛目录清单
 
