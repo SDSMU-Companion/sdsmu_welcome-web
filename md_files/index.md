@@ -11,7 +11,7 @@ actions:
     link: mailto:linkchou@yandex.com
     type: secondary
   - text: Github 反馈
-    link: https://github.com/Mikachu2333/sdsmu_welcome-web/issues
+    link: https://github.com/SDSMU-Companion/sdsmu_welcome-web/issues
     type: secondary
 
 features:
