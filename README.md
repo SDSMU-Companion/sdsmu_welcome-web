@@ -99,8 +99,8 @@ sdsmu_welcome-web/
 ## 依赖升级
 
 1. 安装 `ncu`
-   `npm install -g npm-check-updates`
+   - `npm install -g npm-check-updates`
 2. 查看可升级的 package
-   `ncu`
+   - `ncu`
 3. 升级 packages（Vue系统的插件包需要手动更新 alpha 版本）
-   `ncu -u`
+   - `ncu -u`

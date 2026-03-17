@@ -4,6 +4,16 @@ title: 更新日志（现 Web 版本）
 
 <!-- 不要忘记更新版本号（在 package.json 中） -->
 
+## 2026.03.17
+
+1. 转移本项目至 SDSMU-Companion Org，开始移交
+2. 增加 Github Workplace 的配置，使其支持 Node.js 与 Powershell
+3. 更新笔记本电脑选购相关内容
+4. 更新 Readme 中的过时内容
+5. 修改 Repo 描述
+6. 果然没人赞助，也没人报销之前的支出……
+7. 修改了 Netilfy 的 deploy 设置，使其符合现状
+
 ## 2026.03.16
 
 1. 更新依赖
