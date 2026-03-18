@@ -9,6 +9,8 @@ on:
       - "CODE_OF_CONDUCT.md"
       - "README.md"
       - "deploy.ps1"
+      - "LICENSE-*"
+      - "*.code-workspace"
 
 permissions:
   contents: write

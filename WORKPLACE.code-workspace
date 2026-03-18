@@ -1,0 +1,119 @@
+{
+    "extensions": {
+        "recommendations": [
+            "MS-CEINTL.vscode-language-pack-zh-hans",
+            "DavidAnson.vscode-markdownlint",
+            "Vue.volar",
+            "bierner.markdown-preview-github-styles",
+            "codezombiech.gitignore",
+            "donjayamanne.githistory",
+            "ecmel.vscode-html-css",
+            "esbenp.prettier-vscode",
+            "mhutchie.git-graph"
+        ],
+        "unwantedRecommendations": [
+            "ms-vscode-remote.remote-containers",
+            "shd101wyy.markdown-preview-enhanced",
+            "yzhang.markdown-all-in-one"
+        ]
+    },
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "[css]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[html]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+            "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "[json]": {
+            "editor.defaultFormatter": "vscode.json-language-features"
+        },
+        "[markdown]": {
+            "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+        },
+        "[typescript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[vue]": {
+            "editor.defaultFormatter": "Vue.volar"
+        },
+        "[yaml]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "diffEditor.ignoreTrimWhitespace": false,
+        "diffEditor.maxComputationTime": 0,
+        "editor.accessibilitySupport": "off",
+        "editor.autoIndent": "advanced",
+        "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+        "editor.fontFamily": "Sarasa Mono SC, Noto Sans Mono CJK SC, Noto Sans CJK SC, Maple Mono NL NF CN, Microsoft YaHei, Noto Color Emoji",
+        "editor.fontSize": 16,
+        "editor.formatOnType": true,
+        "editor.guides.bracketPairs": true,
+        "editor.renderWhitespace": "all",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.unicodeHighlight.allowedCharacters": {
+            "️": true
+        },
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.wordWrap": "on",
+        "editor.wrappingStrategy": "advanced",
+        "explorer.confirmDelete": false,
+        "explorer.confirmDragAndDrop": false,
+        "explorer.confirmPasteNative": false,
+        "files.autoSave": "onFocusChange",
+        "files.eol": "\n",
+        "git.alwaysShowStagedChangesResourceGroup": true,
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        "git.enableSmartCommit": true,
+        "git.ignoreMissingGitWarning": true,
+        "git.ignoreRebaseWarning": true,
+        "git.openRepositoryInParentFolders": "never",
+        "json.schemaDownload.trustedDomains": {
+            "https://developer.microsoft.com/json-schemas/": true,
+            "https://json-schema.org/": true,
+            "https://json.schemastore.org/": true,
+            "https://raw.githubusercontent.com/DavidAnson/markdownlint/": true,
+            "https://raw.githubusercontent.com/devcontainers/spec/": true,
+            "https://raw.githubusercontent.com/microsoft/vscode/": true,
+            "https://schemastore.azurewebsites.net/": true,
+            "https://www.schemastore.org/": true
+        },
+        "markdownlint.config": {
+            "MD022": false,
+            "MD024": false,
+            "MD033": false,
+            "MD041": false
+        },
+        "terminal.integrated.profiles.windows": {
+            "Command Prompt": {
+                "args": [
+                    "/K",
+                    "chcp 65001"
+                ],
+                "icon": "terminal-cmd",
+                "path": [
+                    "${env:windir}/Sysnative/cmd.exe",
+                    "${env:windir}/System32/cmd.exe"
+                ]
+            },
+            "Windows PowerShell": {
+                "args": [
+                    "-NoExit",
+                    "chcp 65001"
+                ],
+                "icon": "terminal-powershell",
+                "path": "C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe"
+            }
+        },
+        "window.autoDetectColorScheme": true,
+        "workbench.editor.empty.hint": "hidden",
+    }
+}

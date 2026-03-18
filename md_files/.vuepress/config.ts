@@ -70,7 +70,7 @@ export default defineUserConfig({
   ],
 
   theme: defaultTheme({
-    repo: "https://github.com/Mikachu2333/sdsmu_welcome-web",
+    repo: "https://github.com/SDSMU-Companion/sdsmu_welcome-web",
     logo: "/favicon.svg",
     sidebar: [
       {

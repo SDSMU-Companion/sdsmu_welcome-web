@@ -88,11 +88,11 @@ try {
         Exec { git commit -m "deploy: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" } "Git commit failed"
 
         # 4. Force push to remote gh-pages branch
-        $repoUrl = "https://github.com/Mikachu2333/sdsmu_welcome-web"
+        $repoUrl = "https://github.com/SDSMU-Companion/sdsmu_welcome-web"
         Write-Host "Pushing to gh-pages branch of $repoUrl..." -ForegroundColor Cyan
 
         # Push local master branch to remote gh-pages branch
-        Invoke-WithRetry { git push -f $repoUrl master:gh-pages } "Git push Mikachu2333 failed"
+        Invoke-WithRetry { git push -f $repoUrl master:gh-pages } "Git push SDSMU-Companion failed"
 
         Write-Host "Deployment complete successfully!" -ForegroundColor Green
     }

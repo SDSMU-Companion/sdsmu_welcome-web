@@ -1,16 +1,16 @@
 # 山东第二医科大学指南 Web 版
 
-本项目是山东第二医科大学指南的 Web 版本，包含原 [指南本体（LaTex 版）](https://github.com/Mikachu2333/sdsmu_welcome_tex)与 [指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex) 的全部内容。
-
-**本项目已正式上线**，故此，**上述项目已全部进入 Archive 状态**，不再维护。
+本项目是山东第二医科大学指南的 Web 版本，包含原 [指南本体（LaTex 版）](https://github.com/SDSMU-Companion/sdsmu_welcome_tex)与 [指南切片](https://github.com/SDSMU-Companion/sdsmu_welcome_tex) 的全部内容。
 
 本项目旨在将原有 PDF 版本的指南线上化，让指南在不同设备上轻松浏览。
 
+因**本项目已正式上线**，故**上述项目已全部进入 Archive 状态**，不再维护。
+
 ---
 
-本指南的内容部分仍然遵循 CC BY SA 4.0 LICENSE，代码部分遵循 MIT 许可。
+本指南的内容部分遵循 [CC BY SA 4.0 LICENSE](./LICENSE-CC)，代码部分遵循 [MIT LICENSE](./LICENSE-MIT)。
 
-The code of this project is licensed under the MIT License, and the content is licensed under CC BY SA 4.0 LICENSE.
+The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the content is licensed under [CC BY SA 4.0 LICENSE](./LICENSE-CC).
 
 ## Thanks
 
@@ -57,23 +57,25 @@ The code of this project is licensed under the MIT License, and the content is l
 
 ## 本地构建与运行
 
-本地运行
+- 双击 `WORKPLACE.code-workspace` 以打开 VSCode 工作区
+- 开始编辑
+- 本地运行
 
-```shell
-npm run docs:dev
-```
+   ```shell
+   npm run docs:dev
+   ```
 
-本地测试
+- 本地测试
 
-```shell
-npm run docs:build
-```
+   ```shell
+   npm run docs:build
+   ```
 
-本地构建与上传
+- 本地构建与上传（已不需要）
 
-```shell
-./deploy.ps1
-```
+   ```shell
+   ./deploy.ps1
+   ```
 
 **注意**：移动目录后需要先移除之前的缓存，再 `npm install`，最后运行 `deploy.ps1` 脚本，否则会报错
 
