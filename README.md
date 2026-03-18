@@ -1,10 +1,10 @@
 # 山东第二医科大学指南 Web 版
 
-本项目是山东第二医科大学指南的 Web 版本，包含[指南本体 LaTex 版](https://github.com/Mikachu2333/sdsmu_welcome_tex)与[指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex)的全部内容。
+本项目是山东第二医科大学指南的 Web 版本，包含原 [指南本体（LaTex 版）](https://github.com/Mikachu2333/sdsmu_welcome_tex)与 [指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex) 的全部内容。
 
-**本项目正式上线后，上述项目同时进入 Archive 状态**。
+**本项目已正式上线**，故此，**上述项目已全部进入 Archive 状态**，不再维护。
 
-本项目旨在将原有 PDF 版本的指南线上化，让不同设备也可以轻松浏览相同的内容。
+本项目旨在将原有 PDF 版本的指南线上化，让指南在不同设备上轻松浏览。
 
 ---
 
@@ -82,7 +82,7 @@ npm run docs:build
 ```tree
 sdsmu_welcome-web/
 ├── md_files/                  # Markdown 源文件
-│   ├── .vuepress/            # VuePress 配置
+│   ├── .vuepress/             # VuePress 配置
 │   │   ├── components/       # 自定义 Vue 组件
 │   │   ├── public/           # 静态资源
 │   │   ├── config.ts         # 主配置文件
@@ -92,15 +92,15 @@ sdsmu_welcome-web/
 │   ├── in_school/            # 在校期间内容
 │   ├── doc_related/          # 文档相关
 │   └── CHANGELOG.md          # 更新日志
-├── package.json              # 项目依赖配置
-└── README.md                 # 本文件
+├── package.json               # 项目依赖配置
+└── README.md                  # 本文件
 ```
 
 ## 依赖升级
 
 1. 安装 `ncu`
-   `npm install -g npm-check-updates`
+   - `npm install -g npm-check-updates`
 2. 查看可升级的 package
-   `ncu`
+   - `ncu`
 3. 升级 packages（Vue系统的插件包需要手动更新 alpha 版本）
-   `ncu -u`
+   - `ncu -u`

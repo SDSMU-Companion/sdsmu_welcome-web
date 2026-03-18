@@ -1,5 +1,5 @@
 {
-  "version": "2026.3.16",
+  "version": "2026.3.17",
   "name": "sdsmu_welcome-web",
   "description": "本项目是山东第二医科大学指南的 Web 版本，包含[指南本体LaTex版](https://github.com/Mikachu2333/sdsmu_welcome_tex)与[指南切片](https://github.com/Mikachu2333/sdsmu_welcome_tex)的全部内容。",
   "keywords": [
