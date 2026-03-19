@@ -32,36 +32,13 @@
       </button>
     </div>
 
-    <div v-if="activeFloor === '1F'" class="map-stage">
-      <div class="map-inner">
-        <img
-          class="map-image"
-          :src="withBase('/resources/map/敏行楼1楼剖面图.svg')"
-          alt="敏行楼一楼剖面图"
-        />
-
-        <button
-          v-for="door in floorDoors"
-          :key="door.code"
-          type="button"
-          :class="['door-tag', { active: activeDoor?.code === door.code }]"
-          :style="{ left: `${door.x}%`, top: `${door.y}%` }"
-          @click="locateDoor(door)"
-        >
-          {{ door.code }}
-        </button>
-      </div>
-    </div>
-
-    <div v-else-if="activeFloor === '2F'" class="map-stage">
+    <div class="map-stage">
       <div
-        ref="floor2SvgContainer"
+        ref="activeSvgContainer"
         class="map-svg-container"
-        v-html="floor2SvgMarkup"
+        v-html="activeSvgMarkup"
       />
     </div>
-
-    <div v-else class="placeholder">{{ activeFloor }} 剖面图暂未制作，敬请期待。</div>
   </section>
 </template>
 
@@ -69,42 +46,55 @@
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { withBase } from '@vuepress/client'
 
-const floors = ['1F', '2F', '3F', '4F', '5F']
+const floors = ['1F', '2F', '3F', '4F']
 const activeFloor = ref('1F')
 const query = ref('')
-const activeDoor = ref(null)
-const activeSvgLabel = ref('')
-const floor2SvgMarkup = ref('')
-const floor2SvgContainer = ref(null)
-const floor2TextIndex = ref([])
-const floor2HighlightedEls = ref([])
-const floor2ZoneIndex = ref([])
-const floor2HighlightedZoneEls = ref([])
 const searchMessage = ref('')
-const zoneAlternatePhaseModulo = 2
-const zoneAlternatePhaseRemainder = 1
-
-const floorDoorMap = {
-  '1F': [
-    { code: 'MX101', x: 17, y: 72 },
-    { code: 'MX102', x: 35, y: 72 },
-    { code: 'MX103', x: 52, y: 72 },
-    { code: 'MX104', x: 70, y: 72 },
-    { code: 'MX105', x: 85, y: 72 },
-    { code: 'MX106', x: 17, y: 28 },
-    { code: 'MX107', x: 35, y: 28 },
-    { code: 'MX108', x: 52, y: 28 },
-    { code: 'MX109', x: 70, y: 28 },
-    { code: 'MX110', x: 85, y: 28 }
-  ]
-}
-
-const floorDoors = computed(() => floorDoorMap[activeFloor.value] ?? [])
-
-const normalizeDoorNumber = (value) =>
-  typeof value === 'string' ? value.replace(/\D+/g, '') : ''
 const normalizeSearchText = (value) =>
   typeof value === 'string' ? value.toLowerCase().replace(/\s+/g, '') : ''
+
+const zoneAlternatePhaseModulo = 2
+const zoneAlternatePhaseRemainder = 1
+const floorSvgPathMap = {
+  '1F': '/resources/map/敏行楼剖面图1.svg',
+  '2F': '/resources/map/敏行楼剖面图2.svg',
+  '3F': '/resources/map/敏行楼剖面图3.svg',
+  '4F': '/resources/map/敏行楼剖面图4.svg',
+}
+
+const floorSvgMarkupMap = ref({
+  '1F': '',
+  '2F': '',
+  '3F': '',
+  '4F': '',
+})
+const activeSvgContainer = ref(null)
+const textIndexByFloor = ref({
+  '1F': [],
+  '2F': [],
+  '3F': [],
+  '4F': [],
+})
+const zoneIndexByFloor = ref({
+  '1F': [],
+  '2F': [],
+  '3F': [],
+  '4F': [],
+})
+const highlightedTextElsByFloor = ref({
+  '1F': [],
+  '2F': [],
+  '3F': [],
+  '4F': [],
+})
+const highlightedZoneElsByFloor = ref({
+  '1F': [],
+  '2F': [],
+  '3F': [],
+  '4F': [],
+})
+
+const activeSvgMarkup = computed(() => floorSvgMarkupMap.value[activeFloor.value] ?? '')
 
 const zoneTokenRegex = /^(\d\d)(.)(\d\d)$/
 
@@ -128,7 +118,7 @@ const parseZoneIdRange = (zoneId) => {
   return { start, end }
 }
 
-const roomCodeRegex = /^(\d\d)(.)(\d\d)$/
+const roomCodeRegex = /^(\d\d)([\dx])(\d\d)$/i
 
 const parseRoomCode = (value) => {
   const normalized = normalizeSearchText(value)
@@ -144,7 +134,7 @@ const parseRoomCode = (value) => {
 
 const parseFloorFromRoomCode = (value) => {
   const normalized = normalizeSearchText(value)
-  const match = normalized.match(/^(\d\d)(\d)(\d\d)$/)
+  const match = normalized.match(/^(\d\d)([1-4])(\d\d)$/)
   if (!match) return null
   const parsedFloor = `${match[2]}F`
   return floors.includes(parsedFloor) ? parsedFloor : null
@@ -155,7 +145,10 @@ const zoneMiddleMatches = (zoneMiddle, roomMiddle) =>
 
 const isRoomInZoneRange = (roomCode, range) => {
   if (!roomCode || !range) return false
-  if (range.start.prefix > roomCode.prefix || range.end.prefix < roomCode.prefix) {
+  if (
+    range.start.prefix > roomCode.prefix ||
+    range.end.prefix < roomCode.prefix
+  ) {
     return false
   }
   if (!zoneMiddleMatches(range.start.middle, roomCode.middle)) return false
@@ -169,51 +162,40 @@ const isRoomInZoneRange = (roomCode, range) => {
   return true
 }
 
-const floor2AliasMap = new Map([
-  ['教务办公室', ['31218']],
-  ['辅导员办公室', ['31217']],
-  ['办公室', ['31218', '31217']],
+const floorAliasMap = new Map([
   ['自习室', ['自习长廊']],
   ['自习', ['自习长廊']],
   ['电梯', ['楼梯/电梯']],
   ['楼梯', ['楼梯/电梯']],
   ['卫生间', ['厕所']],
 ])
-const firstFloorLookupMap = new Map(
-  floorDoorMap['1F'].map((door) => [normalizeDoorNumber(door.code), door]),
-)
 
-const locateDoor = (door) => {
-  activeFloor.value = '1F'
-  activeDoor.value = door
-  query.value = normalizeDoorNumber(door.code)
-  activeSvgLabel.value = ''
-  searchMessage.value = `已定位：${door.code}`
-  clearFloor2Highlights()
-  clearFloor2ZoneHighlights()
+const clearTextHighlights = (floor) => {
+  highlightedTextElsByFloor.value[floor].forEach((el) =>
+    el.classList.remove('svg-text-hit'),
+  )
+  highlightedTextElsByFloor.value[floor] = []
 }
 
-const clearFloor2Highlights = () => {
-  floor2HighlightedEls.value.forEach((el) => el.classList.remove('svg-text-hit'))
-  floor2HighlightedEls.value = []
-}
-
-const clearFloor2ZoneHighlights = () => {
-  floor2HighlightedZoneEls.value.forEach((el) => {
+const clearZoneHighlights = (floor) => {
+  highlightedZoneElsByFloor.value[floor].forEach((el) => {
     el.classList.remove('svg-zone-hit')
     el.classList.remove('svg-zone-hit-alt')
   })
-  floor2HighlightedZoneEls.value = []
+  highlightedZoneElsByFloor.value[floor] = []
 }
 
-const buildFloor2TextIndex = () => {
-  if (!floor2SvgContainer.value) return
+const clearAllHighlights = () => {
+  floors.forEach((floor) => {
+    clearTextHighlights(floor)
+    clearZoneHighlights(floor)
+  })
+}
 
-  const textElements = Array.from(
-    floor2SvgContainer.value.querySelectorAll('svg text'),
-  )
-
-  floor2TextIndex.value = textElements
+const buildTextIndex = (floor) => {
+  if (!activeSvgContainer.value) return
+  const textElements = Array.from(activeSvgContainer.value.querySelectorAll('svg text'))
+  textIndexByFloor.value[floor] = textElements
     .map((element) => {
       const text = element.textContent?.trim() ?? ''
       return {
@@ -225,14 +207,10 @@ const buildFloor2TextIndex = () => {
     .filter((item) => item.text.length > 0)
 }
 
-const buildFloor2ZoneIndex = () => {
-  if (!floor2SvgContainer.value) return
-
-  const zoneElements = Array.from(
-    floor2SvgContainer.value.querySelectorAll('svg [id^="zone-"]'),
-  )
-
-  floor2ZoneIndex.value = zoneElements
+const buildZoneIndex = (floor) => {
+  if (!activeSvgContainer.value) return
+  const zoneElements = Array.from(activeSvgContainer.value.querySelectorAll('svg [id^="zone-"]'))
+  zoneIndexByFloor.value[floor] = zoneElements
     .map((element) => {
       const id = element.getAttribute('id') ?? ''
       const range = parseZoneIdRange(id)
@@ -246,29 +224,25 @@ const buildFloor2ZoneIndex = () => {
     .filter(Boolean)
 }
 
-const loadFloor2Svg = async () => {
-  if (floor2SvgMarkup.value) return
-
-  const response = await fetch(withBase('/resources/map/敏行楼2楼剖面图.svg'))
-  floor2SvgMarkup.value = await response.text()
+const loadFloorSvg = async (floor) => {
+  if (floorSvgMarkupMap.value[floor]) return
+  const response = await fetch(withBase(floorSvgPathMap[floor]))
+  floorSvgMarkupMap.value[floor] = await response.text()
   await nextTick()
-  buildFloor2TextIndex()
-  buildFloor2ZoneIndex()
+  buildTextIndex(floor)
+  buildZoneIndex(floor)
 }
 
-const highlightFloor2Matches = (matches) => {
-  clearFloor2Highlights()
-
+const highlightTextMatches = (floor, matches) => {
+  clearTextHighlights(floor)
   matches.forEach((match) => {
     match.element.classList.add('svg-text-hit')
   })
-
-  floor2HighlightedEls.value = matches.map((match) => match.element)
-  activeSvgLabel.value = matches.slice(0, 3).map((match) => match.text).join('、')
+  highlightedTextElsByFloor.value[floor] = matches.map((match) => match.element)
 }
 
-const highlightFloor2ZoneMatches = (matches) => {
-  clearFloor2ZoneHighlights()
+const highlightZoneMatches = (floor, matches) => {
+  clearZoneHighlights(floor)
   matches.forEach((match, index) => {
     match.element.classList.add('svg-zone-hit')
     if (
@@ -278,117 +252,82 @@ const highlightFloor2ZoneMatches = (matches) => {
       match.element.classList.add('svg-zone-hit-alt')
     }
   })
-  floor2HighlightedZoneEls.value = matches.map((match) => match.element)
+  highlightedZoneElsByFloor.value[floor] = matches.map((match) => match.element)
 }
 
 const searchDoor = async () => {
   const rawQuery = query.value?.trim()
   if (!rawQuery) {
-    activeDoor.value = null
-    activeSvgLabel.value = ''
-    searchMessage.value =
-      activeFloor.value === '2F'
-        ? '请输入 2F 房间号/别名/片区后点击搜索'
-        : '请输入门牌号后点击搜索'
-    clearFloor2Highlights()
-    clearFloor2ZoneHighlights()
+    searchMessage.value = '请输入门牌号（格式：xx?xx）或片区编号后点击搜索'
+    clearAllHighlights()
     return
   }
 
   const targetFloor = parseFloorFromRoomCode(rawQuery)
-  if (targetFloor && floors.includes(targetFloor) && activeFloor.value !== targetFloor) {
+  if (targetFloor && activeFloor.value !== targetFloor) {
     switchFloor(targetFloor)
   }
 
-  if (activeFloor.value === '2F') {
-    if (!floor2SvgMarkup.value) {
-      await loadFloor2Svg()
-    }
+  if (!floorSvgMarkupMap.value[activeFloor.value]) {
+    await loadFloorSvg(activeFloor.value)
+  }
 
-    const normalizedText = normalizeSearchText(rawQuery)
-    const directMatches = floor2TextIndex.value.filter(({ normalized }) =>
-      normalized.includes(normalizedText),
+  const normalizedText = normalizeSearchText(rawQuery)
+  const textIndex = textIndexByFloor.value[activeFloor.value]
+  const zoneIndex = zoneIndexByFloor.value[activeFloor.value]
+
+  const directMatches = textIndex.filter(({ normalized }) =>
+    normalized.includes(normalizedText),
+  )
+  const aliasTargets = floorAliasMap.get(normalizedText) ?? []
+  const aliasMatches = aliasTargets.flatMap((target) => {
+    const normalizedTarget = normalizeSearchText(target)
+    return textIndex.filter(({ normalized }) =>
+      normalized.includes(normalizedTarget),
     )
-    const aliasTargets = floor2AliasMap.get(normalizedText) ?? []
-    const aliasMatches = aliasTargets.flatMap((target) => {
-      const normalizedTarget = normalizeSearchText(target)
-      return floor2TextIndex.value.filter(({ normalized }) =>
-        normalized.includes(normalizedTarget),
-      )
-    })
-    const mergedMatches = Array.from(
-      new Map(
-        [...directMatches, ...aliasMatches].map((item) => [item.text, item]),
-      ).values(),
-    )
-    const queryRoomCode = parseRoomCode(rawQuery)
-    const zoneMatches = floor2ZoneIndex.value.filter((zone) => {
-      if (normalizeSearchText(zone.id) === normalizeSearchText(rawQuery)) return true
-      return isRoomInZoneRange(queryRoomCode, zone.range)
-    })
+  })
+  const mergedMatches = Array.from(
+    new Map(
+      [...directMatches, ...aliasMatches].map((item) => [item.text, item]),
+    ).values(),
+  )
 
-    if (mergedMatches.length > 0 || zoneMatches.length > 0) {
-      activeDoor.value = null
-      highlightFloor2Matches(mergedMatches)
-      highlightFloor2ZoneMatches(zoneMatches)
-      const labels = []
-      if (mergedMatches.length > 0 && activeSvgLabel.value) labels.push(activeSvgLabel.value)
-      if (zoneMatches.length > 0) labels.push(...zoneMatches.map((zone) => zone.id))
-      searchMessage.value = `已高亮：${labels.slice(0, 4).join('、')}`
-      return
+  const queryRoomCode = parseRoomCode(rawQuery)
+  const zoneMatches = zoneIndex.filter((zone) => {
+    if (normalizeSearchText(zone.id) === normalizedText) return true
+    return isRoomInZoneRange(queryRoomCode, zone.range)
+  })
+
+  clearAllHighlights()
+
+  if (mergedMatches.length > 0 || zoneMatches.length > 0) {
+    highlightTextMatches(activeFloor.value, mergedMatches)
+    highlightZoneMatches(activeFloor.value, zoneMatches)
+    const labels = []
+    if (mergedMatches.length > 0) {
+      labels.push(...mergedMatches.slice(0, 2).map((item) => item.text))
     }
-
-    activeDoor.value = null
-    activeSvgLabel.value = ''
-    searchMessage.value = `未找到：${rawQuery}`
-    clearFloor2Highlights()
-    clearFloor2ZoneHighlights()
+    if (zoneMatches.length > 0) {
+      labels.push(...zoneMatches.slice(0, 2).map((zone) => zone.id))
+    }
+    searchMessage.value = `已定位 ${activeFloor.value}：${labels.join('、')}`
     return
   }
 
-  const normalizedNumber = normalizeDoorNumber(rawQuery)
-  const normalizedCode = normalizeSearchText(rawQuery).toUpperCase()
-  const matchedDoor =
-    firstFloorLookupMap.get(normalizedNumber) ??
-    floorDoorMap['1F'].find((door) => door.code === normalizedCode)
-
-  if (matchedDoor) {
-    locateDoor(matchedDoor)
-    return
-  }
-
-  activeDoor.value = null
-  activeSvgLabel.value = ''
-  searchMessage.value = `未找到门牌号：${rawQuery}`
+  searchMessage.value = `未找到 ${activeFloor.value} 对应门牌号：${rawQuery}`
 }
 
 const switchFloor = (floor) => {
   activeFloor.value = floor
-  searchMessage.value =
-    floor === '2F'
-      ? '支持搜索 2F 文本/别名/片区（如 31218、自习室、zone-31x01-31x14）'
-      : '支持搜索门牌号：MX101-MX110 或 101-110'
-  if (floor === '2F' && !floor2SvgMarkup.value) {
-    loadFloor2Svg()
-  }
-  if (floor !== '1F') {
-    activeDoor.value = null
-  }
-  if (floor !== '2F') {
-    activeSvgLabel.value = ''
-    clearFloor2Highlights()
-    clearFloor2ZoneHighlights()
+  searchMessage.value = `当前 ${floor}，支持格式 xx?xx（?为楼层）与 zone-xx?xx-xx?xx`
+  if (!floorSvgMarkupMap.value[floor]) {
+    loadFloorSvg(floor)
   }
 }
 
 onMounted(() => {
-  searchMessage.value =
-    activeFloor.value === '2F'
-      ? '支持搜索 2F 文本/别名/片区（如 31218、自习室、zone-31x01-31x14）'
-      : '支持搜索门牌号：MX101-MX110 或 101-110'
-  if (activeFloor.value === '2F') {
-    loadFloor2Svg()
-  }
+  searchMessage.value = '支持 1-4 层门牌号搜索（格式：xx?xx，?为楼层）'
+  loadFloorSvg(activeFloor.value)
 })
 </script>
 
@@ -467,16 +406,6 @@ onMounted(() => {
   background: #f7f9fb;
 }
 
-.map-inner {
-  position: relative;
-}
-
-.map-image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .map-svg-container :deep(svg) {
   display: block;
   width: 100%;
@@ -501,29 +430,6 @@ onMounted(() => {
 
 .map-svg-container :deep(svg .svg-zone-hit.svg-zone-hit-alt) {
   animation-delay: calc(var(--zone-blink-duration) / 2);
-}
-
-.door-tag {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  padding: 0.05rem 0.32rem;
-  font-size: 0.65rem;
-  line-height: 1.3;
-}
-
-.door-tag.active {
-  background: #ffefef;
-  color: var(--door-active-color);
-  border-color: var(--door-active-color);
-  animation: blink 0.8s ease-in-out infinite;
-}
-
-.placeholder {
-  border: 1px dashed var(--c-border);
-  border-radius: 8px;
-  padding: 1rem;
-  color: var(--c-text-light);
-  background: var(--c-bg-light);
 }
 
 @keyframes blink {
