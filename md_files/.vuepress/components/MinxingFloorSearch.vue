@@ -146,7 +146,8 @@ const parseFloorFromRoomCode = (value) => {
   const normalized = normalizeSearchText(value)
   const match = normalized.match(/^(\d\d)(\d)(\d\d)$/)
   if (!match) return null
-  return `${match[2]}F`
+  const parsedFloor = `${match[2]}F`
+  return floors.includes(parsedFloor) ? parsedFloor : null
 }
 
 const zoneMiddleMatches = (zoneMiddle, roomMiddle) =>
