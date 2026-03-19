@@ -5,10 +5,12 @@
         id="door-search-input"
         v-model.trim="query"
         type="search"
-        inputmode="search"
+        inputmode="numeric"
+        pattern="[0-9]*"
         autocomplete="off"
-        placeholder="输入门牌号，如 MX101"
-        aria-label="敏行楼门牌号搜索"
+        placeholder="输入门牌号数字，如 101"
+        aria-label="敏行楼门牌号数字搜索"
+        @input="sanitizeQuery"
         @keydown.enter.prevent="searchDoor"
       />
       <button type="button" @click="searchDoor">搜索</button>
@@ -84,25 +86,29 @@ const floorDoorMap = {
 const floorDoors = computed(() => floorDoorMap[activeFloor.value] ?? [])
 
 const searchMessage = computed(() => {
-  if (!query.value) return '支持搜索门牌号：MX101 - MX110'
+  if (!query.value) return '支持搜索门牌号数字：101 - 110'
   if (!activeDoor.value) return `未找到门牌号：${query.value}`
   return `已定位：${activeDoor.value.code}`
 })
 
-const normalizeRoomCode = (value) =>
-  typeof value === 'string' ? value.replace(/\s+/g, '').toUpperCase() : ''
+const normalizeDoorNumber = (value) =>
+  typeof value === 'string' ? value.replace(/\D+/g, '') : ''
 const firstFloorLookupMap = new Map(
-  floorDoorMap['1F'].map((door) => [normalizeRoomCode(door.code), door]),
+  floorDoorMap['1F'].map((door) => [normalizeDoorNumber(door.code), door]),
 )
 
 const locateDoor = (door) => {
   activeFloor.value = '1F'
   activeDoor.value = door
-  query.value = door.code
+  query.value = normalizeDoorNumber(door.code)
+}
+
+const sanitizeQuery = () => {
+  query.value = normalizeDoorNumber(query.value)
 }
 
 const searchDoor = () => {
-  const normalized = normalizeRoomCode(query.value)
+  const normalized = normalizeDoorNumber(query.value)
   if (!normalized) {
     activeDoor.value = null
     return
@@ -139,7 +145,9 @@ const switchFloor = (floor) => {
 }
 
 #door-search-input {
-  flex: 1;
+  flex: 0 0 12ch;
+  width: 12ch;
+  max-width: 100%;
   padding: 0.45rem 0.6rem;
   border: 1px solid var(--c-border);
   border-radius: 6px;
