@@ -299,7 +299,7 @@ const searchDoor = async () => {
     )
     const queryRoomCode = parseRoomCode(rawQuery)
     const zoneMatches = floor2ZoneIndex.value.filter((zone) => {
-      if (zone.id === normalizedText) return true
+      if (normalizeSearchText(zone.id) === normalizeSearchText(rawQuery)) return true
       return isRoomInZoneRange(queryRoomCode, zone.range)
     })
 
@@ -323,7 +323,7 @@ const searchDoor = async () => {
   }
 
   const normalizedNumber = normalizeDoorNumber(rawQuery)
-  const normalizedCode = rawQuery.toUpperCase().replace(/\s+/g, '')
+  const normalizedCode = normalizeSearchText(rawQuery).toUpperCase()
   const matchedDoor =
     firstFloorLookupMap.get(normalizedNumber) ??
     floorDoorMap['1F'].find((door) => door.code === normalizedCode)
