@@ -349,14 +349,40 @@ onMounted(() => {
   max-width: 100%;
   padding: 0.45rem 0.6rem;
   border: 1px solid var(--c-border, #c5d0db);
-  background: #fff;
+  background: var(--c-bg, #fff);
+  color: var(--c-text, #2c3e50);
   border-radius: 6px;
+}
+
+#door-search-input::placeholder {
+  color: var(--c-text-light, #6b7280);
 }
 
 #door-search-input:focus {
   border-color: var(--c-brand);
   outline: 2px solid rgba(62, 175, 124, 0.2);
   outline-offset: 1px;
+}
+
+:global(html.dark) #door-search-input,
+:global(html[data-theme='dark']) #door-search-input,
+:global(:root[data-theme='dark']) #door-search-input {
+  background: #1f2530;
+  color: #e5e7eb;
+  border-color: #4b5563;
+}
+
+:global(html.dark) #door-search-input::placeholder,
+:global(html[data-theme='dark']) #door-search-input::placeholder,
+:global(:root[data-theme='dark']) #door-search-input::placeholder {
+  color: #9ca3af;
+}
+
+:global(html.dark) #door-search-input:focus,
+:global(html[data-theme='dark']) #door-search-input:focus,
+:global(:root[data-theme='dark']) #door-search-input:focus {
+  border-color: #8cb4ff;
+  outline: 2px solid rgba(140, 180, 255, 0.32);
 }
 
 .search-row button,
