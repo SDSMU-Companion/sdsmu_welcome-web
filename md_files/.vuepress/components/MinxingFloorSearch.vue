@@ -360,8 +360,7 @@ onMounted(() => {
 }
 
 .search-row button,
-.floor-btn,
-.door-tag {
+.floor-btn {
   border: 1px solid var(--c-brand);
   background: var(--c-bg-light);
   color: var(--c-brand);
