@@ -81,6 +81,8 @@ const floor2HighlightedEls = ref([])
 const floor2ZoneIndex = ref([])
 const floor2HighlightedZoneEls = ref([])
 const searchMessage = ref('')
+const zoneAlternatePhaseModulo = 2
+const zoneAlternatePhaseRemainder = 1
 
 const floorDoorMap = {
   '1F': [
@@ -261,7 +263,10 @@ const highlightFloor2ZoneMatches = (matches) => {
   clearFloor2ZoneHighlights()
   matches.forEach((match, index) => {
     match.element.classList.add('svg-zone-hit')
-    if (matches.length > 1 && index % 2 === 1) {
+    if (
+      matches.length > 1 &&
+      index % zoneAlternatePhaseModulo === zoneAlternatePhaseRemainder
+    ) {
       match.element.classList.add('svg-zone-hit-alt')
     }
   })
@@ -377,6 +382,7 @@ onMounted(() => {
 <style scoped>
 .minxing-floor-search {
   --door-active-color: #d1242f;
+  --zone-blink-duration: 0.8s;
   margin: 1rem 0 1.5rem;
 }
 
@@ -477,11 +483,11 @@ onMounted(() => {
   stroke: var(--door-active-color) !important;
   stroke-width: 10px !important;
   fill-opacity: 0.6 !important;
-  animation: blink 0.8s ease-in-out infinite;
+  animation: blink var(--zone-blink-duration) ease-in-out infinite;
 }
 
 .map-svg-container :deep(svg .svg-zone-hit.svg-zone-hit-alt) {
-  animation-delay: 0.4s;
+  animation-delay: calc(var(--zone-blink-duration) / 2);
 }
 
 .door-tag {
