@@ -5,10 +5,9 @@
         id="door-search-input"
         v-model.trim="query"
         type="search"
-        inputmode="numeric"
-        pattern="[0-9]*"
+        inputmode="text"
         autocomplete="off"
-        placeholder="输入门牌号数字，如 101"
+        placeholder="输入门牌号/片区，如 31201、zone-31x01-31x14"
         aria-label="敏行楼门牌号数字搜索"
         @keydown.enter.prevent="searchDoor"
       />
@@ -79,6 +78,9 @@ const floor2SvgMarkup = ref('')
 const floor2SvgContainer = ref(null)
 const floor2TextIndex = ref([])
 const floor2HighlightedEls = ref([])
+const floor2ZoneIndex = ref([])
+const floor2HighlightedZoneEls = ref([])
+const searchMessage = ref('')
 
 const floorDoorMap = {
   '1F': [
@@ -97,26 +99,65 @@ const floorDoorMap = {
 
 const floorDoors = computed(() => floorDoorMap[activeFloor.value] ?? [])
 
-const searchMessage = computed(() => {
-  if (!query.value) {
-    return activeFloor.value === '2F'
-      ? '支持搜索 2F SVG 文本/别名：如 31218、教务办公室、自习室'
-      : '支持搜索门牌号：MX101-MX110 或 101-110'
-  }
-
-  if (activeFloor.value === '2F') {
-    if (!activeSvgLabel.value) return `未找到：${query.value}`
-    return `已高亮：${activeSvgLabel.value}`
-  }
-
-  if (!activeDoor.value) return `未找到门牌号：${query.value}`
-  return `已定位：${activeDoor.value.code}`
-})
-
 const normalizeDoorNumber = (value) =>
   typeof value === 'string' ? value.replace(/\D+/g, '') : ''
 const normalizeSearchText = (value) =>
   typeof value === 'string' ? value.toLowerCase().replace(/\s+/g, '') : ''
+
+const zoneTokenRegex = /^(\d\d)(.)(\d\d)$/
+
+const parseZoneToken = (token) => {
+  const normalized = normalizeSearchText(token)
+  const match = normalized.match(zoneTokenRegex)
+  if (!match) return null
+  return {
+    prefix: match[1],
+    middle: match[2],
+    suffix: Number(match[3]),
+  }
+}
+
+const parseZoneIdRange = (zoneId) => {
+  const match = normalizeSearchText(zoneId).match(/^zone-([^-]+)-([^-]+)$/)
+  if (!match) return null
+  const start = parseZoneToken(match[1])
+  const end = parseZoneToken(match[2])
+  if (!start || !end) return null
+  return { start, end }
+}
+
+const roomCodeRegex = /^(\d\d)(.)(\d\d)$/
+
+const parseRoomCode = (value) => {
+  const normalized = normalizeSearchText(value)
+  const match = normalized.match(roomCodeRegex)
+  if (!match) return null
+  return {
+    normalized,
+    prefix: match[1],
+    middle: match[2],
+    suffix: Number(match[3]),
+  }
+}
+
+const zoneMiddleMatches = (zoneMiddle, roomMiddle) =>
+  zoneMiddle === 'x' || zoneMiddle === roomMiddle
+
+const isRoomInZoneRange = (roomCode, range) => {
+  if (!roomCode || !range) return false
+  if (range.start.prefix > roomCode.prefix || range.end.prefix < roomCode.prefix) {
+    return false
+  }
+  if (!zoneMiddleMatches(range.start.middle, roomCode.middle)) return false
+  if (!zoneMiddleMatches(range.end.middle, roomCode.middle)) return false
+  if (range.start.prefix === roomCode.prefix && roomCode.suffix < range.start.suffix) {
+    return false
+  }
+  if (range.end.prefix === roomCode.prefix && roomCode.suffix > range.end.suffix) {
+    return false
+  }
+  return true
+}
 
 const floor2AliasMap = new Map([
   ['教务办公室', ['31218']],
@@ -137,12 +178,21 @@ const locateDoor = (door) => {
   activeDoor.value = door
   query.value = normalizeDoorNumber(door.code)
   activeSvgLabel.value = ''
+  searchMessage.value = `已定位：${door.code}`
   clearFloor2Highlights()
+  clearFloor2ZoneHighlights()
 }
 
 const clearFloor2Highlights = () => {
   floor2HighlightedEls.value.forEach((el) => el.classList.remove('svg-text-hit'))
   floor2HighlightedEls.value = []
+}
+
+const clearFloor2ZoneHighlights = () => {
+  floor2HighlightedZoneEls.value.forEach((el) =>
+    el.classList.remove('svg-zone-hit'),
+  )
+  floor2HighlightedZoneEls.value = []
 }
 
 const buildFloor2TextIndex = () => {
@@ -164,6 +214,27 @@ const buildFloor2TextIndex = () => {
     .filter((item) => item.text.length > 0)
 }
 
+const buildFloor2ZoneIndex = () => {
+  if (!floor2SvgContainer.value) return
+
+  const zoneElements = Array.from(
+    floor2SvgContainer.value.querySelectorAll('svg [id^="zone-"]'),
+  )
+
+  floor2ZoneIndex.value = zoneElements
+    .map((element) => {
+      const id = element.getAttribute('id') ?? ''
+      const range = parseZoneIdRange(id)
+      if (!range) return null
+      return {
+        element,
+        id: id.toLowerCase(),
+        range,
+      }
+    })
+    .filter(Boolean)
+}
+
 const loadFloor2Svg = async () => {
   if (floor2SvgMarkup.value) return
 
@@ -171,6 +242,7 @@ const loadFloor2Svg = async () => {
   floor2SvgMarkup.value = await response.text()
   await nextTick()
   buildFloor2TextIndex()
+  buildFloor2ZoneIndex()
 }
 
 const highlightFloor2Matches = (matches) => {
@@ -184,12 +256,23 @@ const highlightFloor2Matches = (matches) => {
   activeSvgLabel.value = matches.slice(0, 3).map((match) => match.text).join('、')
 }
 
+const highlightFloor2ZoneMatches = (matches) => {
+  clearFloor2ZoneHighlights()
+  matches.forEach((match) => match.element.classList.add('svg-zone-hit'))
+  floor2HighlightedZoneEls.value = matches.map((match) => match.element)
+}
+
 const searchDoor = async () => {
   const rawQuery = query.value?.trim()
   if (!rawQuery) {
     activeDoor.value = null
     activeSvgLabel.value = ''
+    searchMessage.value =
+      activeFloor.value === '2F'
+        ? '请输入 2F 房间号/别名/片区后点击搜索'
+        : '请输入门牌号后点击搜索'
     clearFloor2Highlights()
+    clearFloor2ZoneHighlights()
     return
   }
 
@@ -214,16 +297,28 @@ const searchDoor = async () => {
         [...directMatches, ...aliasMatches].map((item) => [item.text, item]),
       ).values(),
     )
+    const queryRoomCode = parseRoomCode(rawQuery)
+    const zoneMatches = floor2ZoneIndex.value.filter((zone) => {
+      if (zone.id === normalizedText) return true
+      return isRoomInZoneRange(queryRoomCode, zone.range)
+    })
 
-    if (mergedMatches.length > 0) {
+    if (mergedMatches.length > 0 || zoneMatches.length > 0) {
       activeDoor.value = null
       highlightFloor2Matches(mergedMatches)
+      highlightFloor2ZoneMatches(zoneMatches)
+      const labels = []
+      if (mergedMatches.length > 0 && activeSvgLabel.value) labels.push(activeSvgLabel.value)
+      if (zoneMatches.length > 0) labels.push(...zoneMatches.map((zone) => zone.id))
+      searchMessage.value = `已高亮：${labels.slice(0, 4).join('、')}`
       return
     }
 
     activeDoor.value = null
     activeSvgLabel.value = ''
+    searchMessage.value = `未找到：${rawQuery}`
     clearFloor2Highlights()
+    clearFloor2ZoneHighlights()
     return
   }
 
@@ -240,10 +335,15 @@ const searchDoor = async () => {
 
   activeDoor.value = null
   activeSvgLabel.value = ''
+  searchMessage.value = `未找到门牌号：${rawQuery}`
 }
 
 const switchFloor = (floor) => {
   activeFloor.value = floor
+  searchMessage.value =
+    floor === '2F'
+      ? '支持搜索 2F 文本/别名/片区（如 31218、自习室、zone-31x01-31x14）'
+      : '支持搜索门牌号：MX101-MX110 或 101-110'
   if (floor === '2F' && !floor2SvgMarkup.value) {
     loadFloor2Svg()
   }
@@ -253,10 +353,15 @@ const switchFloor = (floor) => {
   if (floor !== '2F') {
     activeSvgLabel.value = ''
     clearFloor2Highlights()
+    clearFloor2ZoneHighlights()
   }
 }
 
 onMounted(() => {
+  searchMessage.value =
+    activeFloor.value === '2F'
+      ? '支持搜索 2F 文本/别名/片区（如 31218、自习室、zone-31x01-31x14）'
+      : '支持搜索门牌号：MX101-MX110 或 101-110'
   if (activeFloor.value === '2F') {
     loadFloor2Svg()
   }
@@ -359,6 +464,13 @@ onMounted(() => {
   stroke-width: 6px;
   paint-order: stroke fill;
   font-weight: 700;
+  animation: blink 0.8s ease-in-out infinite;
+}
+
+.map-svg-container :deep(svg .svg-zone-hit) {
+  stroke: var(--door-active-color) !important;
+  stroke-width: 10px !important;
+  fill-opacity: 0.6 !important;
   animation: blink 0.8s ease-in-out infinite;
 }
 
