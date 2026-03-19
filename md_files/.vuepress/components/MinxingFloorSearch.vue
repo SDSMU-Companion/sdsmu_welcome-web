@@ -33,13 +33,7 @@
     </div>
 
     <div v-if="activeFloor === '1F'" class="map-stage">
-      <div
-        class="map-inner"
-        :style="{
-          transform: `scale(${zoomScale})`,
-          transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`
-        }"
-      >
+      <div class="map-inner">
         <img
           class="map-image"
           :src="withBase('/resources/map/敏行楼1楼剖面图.svg')"
@@ -86,7 +80,6 @@ const floorDoorMap = {
     { code: 'MX110', x: 85, y: 28 }
   ]
 }
-const ACTIVE_ZOOM_SCALE = 1.35
 
 const floorDoors = computed(() => floorDoorMap[activeFloor.value] ?? [])
 
@@ -94,12 +87,6 @@ const searchMessage = computed(() => {
   if (!query.value) return '支持搜索门牌号：MX101 - MX110'
   if (!activeDoor.value) return `未找到门牌号：${query.value}`
   return `已定位：${activeDoor.value.code}`
-})
-
-const zoomScale = computed(() => (activeDoor.value ? ACTIVE_ZOOM_SCALE : 1))
-const zoomOrigin = computed(() => {
-  if (!activeDoor.value) return { x: 50, y: 50 }
-  return { x: activeDoor.value.x, y: activeDoor.value.y }
 })
 
 const normalizeRoomCode = (value) =>
@@ -207,8 +194,6 @@ const switchFloor = (floor) => {
 
 .map-inner {
   position: relative;
-  transform-origin: center;
-  transition: transform 0.35s ease;
 }
 
 .map-image {
@@ -223,14 +208,12 @@ const switchFloor = (floor) => {
   padding: 0.05rem 0.32rem;
   font-size: 0.65rem;
   line-height: 1.3;
-  transition: transform 0.2s ease;
 }
 
 .door-tag.active {
   background: #ffefef;
   color: var(--door-active-color);
   border-color: var(--door-active-color);
-  transform: translate(-50%, -50%) scale(1.25);
   animation: blink 0.8s ease-in-out infinite;
 }
 
