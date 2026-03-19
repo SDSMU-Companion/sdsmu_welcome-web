@@ -189,9 +189,10 @@ const clearFloor2Highlights = () => {
 }
 
 const clearFloor2ZoneHighlights = () => {
-  floor2HighlightedZoneEls.value.forEach((el) =>
-    el.classList.remove('svg-zone-hit'),
-  )
+  floor2HighlightedZoneEls.value.forEach((el) => {
+    el.classList.remove('svg-zone-hit')
+    el.classList.remove('svg-zone-hit-alt')
+  })
   floor2HighlightedZoneEls.value = []
 }
 
@@ -258,7 +259,12 @@ const highlightFloor2Matches = (matches) => {
 
 const highlightFloor2ZoneMatches = (matches) => {
   clearFloor2ZoneHighlights()
-  matches.forEach((match) => match.element.classList.add('svg-zone-hit'))
+  matches.forEach((match, index) => {
+    match.element.classList.add('svg-zone-hit')
+    if (matches.length > 1 && index % 2 === 1) {
+      match.element.classList.add('svg-zone-hit-alt')
+    }
+  })
   floor2HighlightedZoneEls.value = matches.map((match) => match.element)
 }
 
@@ -472,6 +478,10 @@ onMounted(() => {
   stroke-width: 10px !important;
   fill-opacity: 0.6 !important;
   animation: blink 0.8s ease-in-out infinite;
+}
+
+.map-svg-container :deep(svg .svg-zone-hit.svg-zone-hit-alt) {
+  animation-delay: 0.4s;
 }
 
 .door-tag {
