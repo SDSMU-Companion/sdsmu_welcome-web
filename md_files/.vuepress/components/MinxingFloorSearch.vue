@@ -142,6 +142,13 @@ const parseRoomCode = (value) => {
   }
 }
 
+const parseFloorFromRoomCode = (value) => {
+  const normalized = normalizeSearchText(value)
+  const match = normalized.match(/^(\d\d)(\d)(\d\d)$/)
+  if (!match) return null
+  return `${match[2]}F`
+}
+
 const zoneMiddleMatches = (zoneMiddle, roomMiddle) =>
   zoneMiddle === 'x' || zoneMiddle === roomMiddle
 
@@ -285,6 +292,11 @@ const searchDoor = async () => {
     clearFloor2Highlights()
     clearFloor2ZoneHighlights()
     return
+  }
+
+  const targetFloor = parseFloorFromRoomCode(rawQuery)
+  if (targetFloor && floors.includes(targetFloor) && activeFloor.value !== targetFloor) {
+    switchFloor(targetFloor)
   }
 
   if (activeFloor.value === '2F') {
