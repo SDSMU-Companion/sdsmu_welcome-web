@@ -50,21 +50,7 @@ export default defineUserConfig({
       "link",
       {
         rel: "stylesheet",
-        href: "https://cdn.jsdmirror.cn/npm/@fontsource/noto-sans-sc@5.2.8/400.min.css",
-      },
-    ],
-    [
-      "link",
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdmirror.cn/npm/@fontsource/noto-sans-sc@5.2.8/700.min.css",
-      },
-    ],
-    [
-      "link",
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdmirror.cn/npm/@fontsource/jetbrains-mono@5.2.8/index.min.css",
+        href: "/fonts/local-fonts.css",
       },
     ],
   ],

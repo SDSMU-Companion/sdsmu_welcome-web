@@ -1,0 +1,38 @@
+/*
+  Place these files in the same folder as this stylesheet:
+  - noto-sans-sc-400.woff2
+  - noto-sans-sc-700.woff2
+  - jetbrains-mono-400.woff2
+*/
+
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("/fonts/NotoSansCJKsc-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("/fonts/NotoSansCJKsc-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Mono CJK SC";
+  src: url("/fonts/NotoSansMonoCJKsc-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Mono CJK SC";
+  src: url("/fonts/NotoSansMonoCJKsc-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
