@@ -102,10 +102,10 @@ const zoomOrigin = computed(() => {
   return { x: activeDoor.value.x, y: activeDoor.value.y }
 })
 
-const normalizeDoorCode = (value) =>
+const normalizeRoomCode = (value) =>
   typeof value === 'string' ? value.replace(/\s+/g, '').toUpperCase() : ''
-const normalizedFirstFloorLookup = new Map(
-  floorDoorMap['1F'].map((door) => [normalizeDoorCode(door.code), door]),
+const firstFloorLookupMap = new Map(
+  floorDoorMap['1F'].map((door) => [normalizeRoomCode(door.code), door]),
 )
 
 const locateDoor = (door) => {
@@ -115,13 +115,13 @@ const locateDoor = (door) => {
 }
 
 const searchDoor = () => {
-  const normalized = normalizeDoorCode(query.value)
+  const normalized = normalizeRoomCode(query.value)
   if (!normalized) {
     activeDoor.value = null
     return
   }
 
-  const matchedDoor = normalizedFirstFloorLookup.get(normalized)
+  const matchedDoor = firstFloorLookupMap.get(normalized)
 
   if (matchedDoor) {
     locateDoor(matchedDoor)
