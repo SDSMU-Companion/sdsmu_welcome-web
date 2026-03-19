@@ -6,6 +6,7 @@ import InlineImage from "./components/InlineImage.vue";
 import Donate from "./components/Donate.vue";
 import QrCodeLink from "./components/QrCodeLink.vue";
 import QrCodeBlock from "./components/QrCodeBlock.vue";
+import MinxingFloorSearch from "./components/MinxingFloorSearch.vue";
 import "./style.css";
 
 const ANCHOR_OFFSET_PX = 96;
@@ -59,6 +60,7 @@ export default defineClientConfig({
     app.component("Donate", Donate);
     app.component("QrCodeLink", QrCodeLink);
     app.component("QrCodeBlock", QrCodeBlock);
+    app.component("MinxingFloorSearch", MinxingFloorSearch);
     router.afterEach((to) => {
       applyFootnoteBackRefOffsetAndHighlight(to.hash);
     });

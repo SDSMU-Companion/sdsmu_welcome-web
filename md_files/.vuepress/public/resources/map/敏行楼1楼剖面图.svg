@@ -1,0 +1,35 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="1180" height="500" rx="18" fill="#FFFFFF" stroke="#2E5B8A" stroke-width="4" />
+  <rect x="80" y="205" width="1040" height="110" rx="14" fill="#E9F2FB" stroke="#2E5B8A" stroke-width="3" />
+  <text x="600" y="270" text-anchor="middle" font-size="36" fill="#2E5B8A" font-family="Noto Sans SC, Arial, sans-serif">一楼主走廊</text>
+
+  <g fill="#F8FAFF" stroke="#4E77A5" stroke-width="2">
+    <rect x="80" y="60" width="160" height="120" rx="8" />
+    <rect x="260" y="60" width="160" height="120" rx="8" />
+    <rect x="440" y="60" width="160" height="120" rx="8" />
+    <rect x="620" y="60" width="160" height="120" rx="8" />
+    <rect x="800" y="60" width="160" height="120" rx="8" />
+
+    <rect x="80" y="340" width="160" height="120" rx="8" />
+    <rect x="260" y="340" width="160" height="120" rx="8" />
+    <rect x="440" y="340" width="160" height="120" rx="8" />
+    <rect x="620" y="340" width="160" height="120" rx="8" />
+    <rect x="800" y="340" width="160" height="120" rx="8" />
+  </g>
+
+  <g font-size="34" fill="#1C3E65" text-anchor="middle" font-family="JetBrains Mono, Arial, sans-serif">
+    <text x="160" y="132">MX106</text>
+    <text x="340" y="132">MX107</text>
+    <text x="520" y="132">MX108</text>
+    <text x="700" y="132">MX109</text>
+    <text x="880" y="132">MX110</text>
+
+    <text x="160" y="412">MX101</text>
+    <text x="340" y="412">MX102</text>
+    <text x="520" y="412">MX103</text>
+    <text x="700" y="412">MX104</text>
+    <text x="880" y="412">MX105</text>
+  </g>
+
+  <text x="1130" y="65" text-anchor="end" font-size="22" fill="#2E5B8A" font-family="Noto Sans SC, Arial, sans-serif">敏行楼一楼剖面图（示意）</text>
+</svg>
