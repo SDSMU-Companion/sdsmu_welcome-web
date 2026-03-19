@@ -10,7 +10,6 @@
         autocomplete="off"
         placeholder="输入门牌号数字，如 101"
         aria-label="敏行楼门牌号数字搜索"
-        @input="sanitizeQuery"
         @keydown.enter.prevent="searchDoor"
       />
       <button type="button" @click="searchDoor">搜索</button>
@@ -140,8 +139,6 @@ const locateDoor = (door) => {
   activeSvgLabel.value = ''
   clearFloor2Highlights()
 }
-
-const sanitizeQuery = () => {}
 
 const clearFloor2Highlights = () => {
   floor2HighlightedEls.value.forEach((el) => el.classList.remove('svg-text-hit'))
@@ -280,7 +277,6 @@ onMounted(() => {
 
 #door-search-input {
   flex: 0 0 24ch;
-  width: 24ch;
   max-width: 100%;
   padding: 0.45rem 0.6rem;
   border: 1px solid var(--c-border, #c5d0db);
