@@ -59,35 +59,35 @@ const floorSvgMarkupMap = ref({
 });
 const activeSvgContainer = ref(null);
 // 缓存各层的文本节点和片区节点以加速搜索
-const textIndexByFloor = ref({
+let textIndexByFloor = {
   B1F: [],
   "1F": [],
   "2F": [],
   "3F": [],
   "4F": [],
-});
-const zoneIndexByFloor = ref({
+};
+let zoneIndexByFloor = {
   B1F: [],
   "1F": [],
   "2F": [],
   "3F": [],
   "4F": [],
-});
+};
 // 记录当前被高亮的元素
-const highlightedTextElsByFloor = ref({
+let highlightedTextElsByFloor = {
   B1F: [],
   "1F": [],
   "2F": [],
   "3F": [],
   "4F": [],
-});
-const highlightedZoneElsByFloor = ref({
+};
+let highlightedZoneElsByFloor = {
   B1F: [],
   "1F": [],
   "2F": [],
   "3F": [],
   "4F": [],
-});
+};
 
 const activeSvgMarkup = computed(
   () => floorSvgMarkupMap.value[activeFloor.value] ?? "",
@@ -173,6 +173,8 @@ const isRoomInZoneRange = (roomCode, range) => {
 const floorAliasMap = new Map([
   ["自习室", ["自习长廊"]],
   ["自习", ["自习长廊"]],
+  ["学习走廊", ["自习长廊"]],
+  ["走廊", ["自习长廊"]],
   ["电梯", ["楼梯/电梯"]],
   ["楼梯", ["楼梯/电梯"]],
   ["卫生间", ["厕所"]],
@@ -180,19 +182,21 @@ const floorAliasMap = new Map([
 
 // 清除对应楼层文本的高亮状态
 const clearTextHighlights = (floor) => {
-  highlightedTextElsByFloor.value[floor].forEach((el) =>
-    el.classList.remove("svg-text-hit"),
-  );
-  highlightedTextElsByFloor.value[floor] = [];
+  highlightedTextElsByFloor[floor].forEach((el) => {
+    if (el) el.classList.remove("svg-text-hit");
+  });
+  highlightedTextElsByFloor[floor] = [];
 };
 
 // 清除对应楼层片区（划定区域）的高亮状态
 const clearZoneHighlights = (floor) => {
-  highlightedZoneElsByFloor.value[floor].forEach((el) => {
-    el.classList.remove("svg-zone-hit");
-    el.classList.remove("svg-zone-hit-alt");
+  highlightedZoneElsByFloor[floor].forEach((el) => {
+    if (el) {
+      el.classList.remove("svg-zone-hit");
+      el.classList.remove("svg-zone-hit-alt");
+    }
   });
-  highlightedZoneElsByFloor.value[floor] = [];
+  highlightedZoneElsByFloor[floor] = [];
 };
 
 // 清除所有楼层的所有高亮状态
@@ -209,7 +213,7 @@ const buildTextIndex = (floor) => {
   const textElements = Array.from(
     activeSvgContainer.value.querySelectorAll("svg text"),
   );
-  textIndexByFloor.value[floor] = textElements
+  textIndexByFloor[floor] = textElements
     .map((element) => {
       const text = element.textContent?.trim() ?? "";
       return {
@@ -227,7 +231,7 @@ const buildZoneIndex = (floor) => {
   const zoneElements = Array.from(
     activeSvgContainer.value.querySelectorAll('svg [id^="zone-"]'),
   );
-  zoneIndexByFloor.value[floor] = zoneElements
+  zoneIndexByFloor[floor] = zoneElements
     .map((element) => {
       const id = element.getAttribute("id") ?? "";
       const range = parseZoneIdRange(id);
@@ -243,9 +247,11 @@ const buildZoneIndex = (floor) => {
 
 // 异步加载对应楼层的 SVG 文件并建立索引缓存
 const loadFloorSvg = async (floor) => {
-  if (floorSvgMarkupMap.value[floor]) return;
-  const response = await fetch(withBase(floorSvgPathMap[floor]));
-  floorSvgMarkupMap.value[floor] = await response.text();
+  if (!floorSvgMarkupMap.value[floor]) {
+    const response = await fetch(withBase(floorSvgPathMap[floor]));
+    floorSvgMarkupMap.value[floor] = await response.text();
+  }
+
   await nextTick();
   buildTextIndex(floor);
   buildZoneIndex(floor);
@@ -255,9 +261,12 @@ const loadFloorSvg = async (floor) => {
 const highlightTextMatches = (floor, matches) => {
   clearTextHighlights(floor);
   matches.forEach((match) => {
+    // 强制触发重绘，重启CSS动画
+    match.element.classList.remove("svg-text-hit");
+    void match.element.offsetWidth;
     match.element.classList.add("svg-text-hit");
   });
-  highlightedTextElsByFloor.value[floor] = matches.map(
+  highlightedTextElsByFloor[floor] = matches.map(
     (match) => match.element,
   );
 };
@@ -266,6 +275,9 @@ const highlightTextMatches = (floor, matches) => {
 const highlightZoneMatches = (floor, matches) => {
   clearZoneHighlights(floor);
   matches.forEach((match, index) => {
+    // 强制触发重绘
+    match.element.classList.remove("svg-zone-hit", "svg-zone-hit-alt");
+    void match.element.offsetWidth;
     match.element.classList.add("svg-zone-hit");
     if (
       matches.length > 1 &&
@@ -274,7 +286,7 @@ const highlightZoneMatches = (floor, matches) => {
       match.element.classList.add("svg-zone-hit-alt");
     }
   });
-  highlightedZoneElsByFloor.value[floor] = matches.map(
+  highlightedZoneElsByFloor[floor] = matches.map(
     (match) => match.element,
   );
 };
@@ -289,18 +301,26 @@ const searchDoor = async () => {
     return;
   }
 
-  const targetFloor = parseFloorFromRoomCode(rawQuery);
-  if (targetFloor && activeFloor.value !== targetFloor) {
-    switchFloor(targetFloor);
+  const normalizedText = normalizeSearchText(rawQuery);
+  let targetFloor = parseFloorFromRoomCode(rawQuery);
+
+  // 处理自习长廊等别名跳转，指定为 2F（因为只在2层显示）
+  const zixiKeywords = ["自习长廊", "自习", "自习室", "学习走廊", "走廊"];
+  if (!targetFloor && zixiKeywords.includes(normalizedText)) {
+    targetFloor = "2F";
   }
 
-  if (!floorSvgMarkupMap.value[activeFloor.value]) {
+  if (targetFloor && activeFloor.value !== targetFloor) {
+    await switchFloor(targetFloor);
+  }
+
+  // 确保DOM索引最新
+  if (!floorSvgMarkupMap.value[activeFloor.value] || textIndexByFloor[activeFloor.value].length === 0) {
     await loadFloorSvg(activeFloor.value);
   }
 
-  const normalizedText = normalizeSearchText(rawQuery);
-  const textIndex = textIndexByFloor.value[activeFloor.value];
-  const zoneIndex = zoneIndexByFloor.value[activeFloor.value];
+  const textIndex = textIndexByFloor[activeFloor.value];
+  const zoneIndex = zoneIndexByFloor[activeFloor.value];
 
   const directMatches = textIndex.filter(({ normalized }) =>
     normalized.includes(normalizedText),
@@ -312,11 +332,13 @@ const searchDoor = async () => {
       normalized.includes(normalizedTarget),
     );
   });
-  const mergedMatches = Array.from(
-    new Map(
-      [...directMatches, ...aliasMatches].map((item) => [item.text, item]),
-    ).values(),
-  );
+  // 当只有在2层并搜索相关关键字时，如果通过 directMatches 未命中，但关键词属于自习系列，可强制寻找自习长廊
+  const mergedMatchesSet = new Map([...directMatches, ...aliasMatches].map((item) => [item.text, item]));
+  if (mergedMatchesSet.size === 0 && activeFloor.value === "2F" && zixiKeywords.includes(normalizedText)) {
+    const zixiTargets = textIndex.filter(({ normalized }) => normalized.includes(normalizeSearchText("自习长廊")));
+    zixiTargets.forEach(item => mergedMatchesSet.set(item.text, item));
+  }
+  const mergedMatches = Array.from(mergedMatchesSet.values());
 
   const queryRoomCode = parseRoomCode(rawQuery);
   const zoneMatches = zoneIndex.filter((zone) => {
@@ -345,13 +367,11 @@ const searchDoor = async () => {
   searchError.value = true;
 };
 // 切换当前激活的楼层，如果尚未加载对应地图也会触发加载
-const switchFloor = (floor) => {
+const switchFloor = async (floor) => {
   activeFloor.value = floor;
   searchMessage.value = `当前 ${floor}，支持格式 xxxxx（纯数字）`;
   searchError.value = false;
-  if (!floorSvgMarkupMap.value[floor]) {
-    loadFloorSvg(floor);
-  }
+  await loadFloorSvg(floor);
 };
 
 onMounted(() => {
@@ -417,10 +437,17 @@ onMounted(() => {
 .search-row button,
 .floor-btn {
   border: 1px solid var(--c-brand);
-  background: var(--c-bg-light);
+  background: transparent;
   color: var(--c-brand);
   border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-row button:hover,
+.floor-btn:hover {
+  background: var(--c-brand);
+  color: var(--c-bg, #fff);
 }
 
 .search-row button {
@@ -450,7 +477,7 @@ onMounted(() => {
 
 .floor-btn.active {
   background: var(--c-brand);
-  color: #fff;
+  color: var(--c-bg, #fff);
 }
 
 .map-stage {
