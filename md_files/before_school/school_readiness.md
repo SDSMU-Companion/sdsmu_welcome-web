@@ -1,5 +1,12 @@
 ---
 title: 入学准备
+tag:
+   - 四级
+   - 六级
+   - 4级
+   - 6级
+   - 四六级
+   - CET
 ---
 
 ## <span style="border-bottom:3px double red;color:red">必要证件及物品</span>

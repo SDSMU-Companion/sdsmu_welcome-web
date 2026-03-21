@@ -30,8 +30,8 @@ title: 学习类教程
 
 1. 打开“山东第二医科大学”app→ 点击底部菜单“应用”
 2. 点击“业务申请”→“学生邮箱申请流程”→“我要办理”
-3. 按照要求填写所有信息并仔细阅读说明 → 提交信息，等待通过
-4. 提交后的下个月 1 号自动注册，进入下一小节的首次登录教程
+3. 按照要求填写所有信息并仔细阅读说明 → 提交信息（向所有审批者发送），等待通过
+4. 提交后的**下个月1号**自动注册，进入下一小节的首次登录教程
 
 ::: warning
 以下操作**必须使用电脑端浏览器进行**
@@ -39,14 +39,14 @@ title: 学习类教程
 
 ### 首次登录激活
 
-1. 在提交信息后的下个月第一天后（推荐 2 ～ 9 号）方可进行此小节步骤，账号创建 10 天后逾期未登录视为放弃账号申请
-2. → 打开[https://edu.icoremail.net](https://edu.icoremail.net) → 点击“忘记密码”
+1. 在提交信息后的**下个月第一天后**（推荐 2～9 号）方可进行此小节步骤，账号创建 10 天后**逾期未登录视为放弃账号申请**
+2. → 打开 [https://edu.icoremail.net](https://edu.icoremail.net) → 点击“忘记密码”
 3. → 选择“山东第二医科大学”→ 按照步骤重置密码（相当于首次设置密码）
-   ::: tip 密码强度
-   建议 14 ～ 16 位，含大小写、数字、特殊字符如下划线等
+   ::: important 密码强度
+   应为 14 ～ 16 位，含大小写、数字、特殊字符（如下划线等）
    :::
 
-4. → 再次打开[https://edu.icoremail.net](https://edu.icoremail.net)（或[https://mail.stu.sdsmu.edu.cn](https://mail.stu.sdsmu.edu.cn)），并登录
+4. → 再次打开 [https://edu.icoremail.net](https://edu.icoremail.net)（或 [https://mail.stu.sdsmu.edu.cn](https://mail.stu.sdsmu.edu.cn) ），并登录
 
 ### 设置
 
