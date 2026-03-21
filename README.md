@@ -129,3 +129,5 @@ sdsmu_welcome-web/
    - `ncu`
 3. 升级 packages（Vue系统的插件包需要手动更新 alpha 版本）
    - `ncu -u`
+
+**严禁升级 `"@vuepress/plugin-slimsearch": "2.0.0-rc.121"`**！
