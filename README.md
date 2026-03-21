@@ -89,13 +89,16 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 - 双击 `WORKPLACE.code-workspace` 以打开 VSCode 工作区
 - 开始编辑
 - 本地运行
-  1. 打开“终端”，首次运行需先输入 `npm install package.json` 安装依赖
+  1. 打开“终端”，首次运行需先输入 `npm install package.json` 安装依赖（移动目录后需要先移除之前 `.vuepress/.cache` 文件夹，再在项目根目录下 `npm install package.json`，否则会报错）
   2. 本地预览修改后的文件 `npm run docs:dev`
-  3. 本地测试 `npm run docs:build`
+  3. 本地构建 `npm run docs:build`
 - 上传修改后的文件到 GitHub 仓库
    1. 上传前先运行 `git pull` 同步远程仓库的修改
    2. 再通过 lazygit 或左侧边栏提交修改 或 `git add *;git commit -am "提交文件的概括信息"`
    3. 通过 lazygit 或左侧边栏或 `git push` 上传修改
+- 上传构建好的文件到新服务器
+   1. 运行 `npm run docs:build` 构建文件
+   2. 上传 `/md_files/.vuepress/dist` 文件夹中的**所有内容**到服务器的对应目录，指明主页为 `index.html`
 
 **注意**：移动目录后需要先移除之前的缓存，再 `npm install`，否则会报错
 
