@@ -24,25 +24,54 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 
 请参考以下链接学习 Markdown 文件的编辑
 
-1. [Markdown 备忘清单](https://reference.learntech.cn/docs/markdown.html)
+1. [Markdown 备忘清单](https://wangchujiang.com/reference/docs/markdown.html)
 2. [VuePress 生态系统](https://ecosystem.vuejs.press/zh/)
 3. [HTML 备忘清单](https://reference.learntech.cn/docs/html.html)
 4. [Vue 3 备忘清单](https://reference.learntech.cn/docs/vue.html)
 
 ### 示例
 
-1. 插入图片请参考 [`map_full.md`](md_files/in_school/campus_fuyanshan/maps/map_full.md)中的做法
-2. 提示块支持 `info`、`warning`、`important`、`note`、`tip`等，但是一般我们只用这几个
+> 看到此处则默认你已经看完了上面的markdown入门基本知识
+
+1. 图片插入
+   1. 插入不缩放的大图片请参考 [`map_full.md`](md_files/in_school/campus_fuyanshan/maps/map_full.md) 中的做法，注意图片 svg 与 webp 的问题（仅地图需要两个）
+
+      `<FigureImage src="图片路径" title="自己起的自定义标题" downloadLink="图片路径（通常和上面的一致，仅地图有svg与webp之分）"></FigureImage>`
+
+   2. 行内图片（自动缩放）请参考 [`life.md` 浴室预约与使用-浮烟山校区](md_files/in_school/tutorial/life.md#浴室预约与使用)的文本
+
+      `前面的文字 <InlineImage src="图片路径"></InlineImage> 后面的文字`
+
+2. 提示块
+
+    ```markdown
+    ::: 以下几项根据情况选择
+    文字
+    :::
+    ```
+
    - `tip` 因格式原因不便在正文处给出的注释
    - `warning` 警告
    - `info` 相关信息
    - `note` 提示
    - `important` 重要提示，少用
 3. 强调请参考 [`thank_lists.md` 的最后](md_files/doc_related/thank_lists.md)
+
+   1. 加粗代码为 `font-size:2em;`
+   2. 字体颜色通用代码为 `color:rgb(0,0,0);`，特殊颜色可以直接写英文
+   3. 背景色通用代码为 `background:rgb(0,0,0);`，特殊颜色可以直接写英文
+   4. 字体加粗为 `font-weight:bold;`
+
+   综合示例如下：
+
+    ```markdown
+    <span style="font-size:2em; color:red; font-weight:bold; background:yellow">需要加粗的文本，效果为大字、红色、背景黄色</span>
+    ```
+
 4. 双下划线请参考 [`dormitory_fuyanshan.md`](/md_files/in_school/campus_fuyanshan/dormitory_fuyanshan.md#住宿注意事项)
 5. 文字标红参考 [`study.md`](/md_files/in_school/life/study.md#杂项)
 6. 手动书签跳转参考 [`life.md` 的脚注 1](/md_files/in_school/tutorial/life.md#新生信息查询线上报到) 与 [`school_readiness.md` 的脚注 8](/md_files/before_school/school_readiness.md#宿舍用品)
-7. 行内图片链接请参考 [`life.md` 链接的浮烟山校区部分](md_files/in_school/tutorial/life.md#浴室预约与使用)
+7.
 8. 行内二维码参考 [`common_public_accounts.md`](/md_files/in_school/tutorial/common_public_accounts.md)，行间二维码参考 [thank_lists.md](/md_files/doc_related/thank_lists.md#宣传发布)
 
 ### 写作风格说明
@@ -60,24 +89,15 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 - 双击 `WORKPLACE.code-workspace` 以打开 VSCode 工作区
 - 开始编辑
 - 本地运行
+  1. 打开“终端”，首次运行需先输入 `npm install package.json` 安装依赖
+  2. 本地预览修改后的文件 `npm run docs:dev`
+  3. 本地测试 `npm run docs:build`
+- 上传修改后的文件到 GitHub 仓库
+   1. 上传前先运行 `git pull` 同步远程仓库的修改
+   2. 再通过 lazygit 或左侧边栏提交修改 或 `git add *;git commit -am "提交文件的概括信息"`
+   3. 通过 lazygit 或左侧边栏或 `git push` 上传修改
 
-   ```shell
-   npm run docs:dev
-   ```
-
-- 本地测试
-
-   ```shell
-   npm run docs:build
-   ```
-
-- 本地构建与上传（已不需要）
-
-   ```shell
-   ./deploy.ps1
-   ```
-
-**注意**：移动目录后需要先移除之前的缓存，再 `npm install`，最后运行 `deploy.ps1` 脚本，否则会报错
+**注意**：移动目录后需要先移除之前的缓存，再 `npm install`，否则会报错
 
 ### 项目结构
 
