@@ -71,8 +71,7 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 4. 双下划线请参考 [`dormitory_fuyanshan.md`](/md_files/in_school/campus_fuyanshan/dormitory_fuyanshan.md#住宿注意事项)
 5. 文字标红参考 [`study.md`](/md_files/in_school/life/study.md#杂项)
 6. 手动书签跳转参考 [`life.md` 的脚注 1](/md_files/in_school/tutorial/life.md#新生信息查询线上报到) 与 [`school_readiness.md` 的脚注 8](/md_files/before_school/school_readiness.md#宿舍用品)
-7.
-8. 行内二维码参考 [`common_public_accounts.md`](/md_files/in_school/tutorial/common_public_accounts.md)，行间二维码参考 [thank_lists.md](/md_files/doc_related/thank_lists.md#宣传发布)
+7. 行内二维码参考 [`common_public_accounts.md`](/md_files/in_school/tutorial/common_public_accounts.md)，行间二维码参考 [thank_lists.md](/md_files/doc_related/thank_lists.md#宣传发布)
 
 ### 写作风格说明
 
@@ -130,4 +129,4 @@ sdsmu_welcome-web/
 3. 升级 packages（Vue系统的插件包需要手动更新 alpha 版本）
    - `ncu -u`
 
-**严禁升级 `"@vuepress/plugin-slimsearch": "2.0.0-rc.121"`**！
+**严禁升级 `"@vuepress/plugin-slimsearch": "2.0.0-rc.121"`**！（Ref: <https://github.com/vuepress/ecosystem/issues/653> ）
