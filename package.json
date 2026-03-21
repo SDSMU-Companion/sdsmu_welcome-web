@@ -1,5 +1,5 @@
 {
-  "version": "2026.3.20",
+  "version": "2026.3.21",
   "name": "sdsmu_welcome-web",
   "description": "本项目是山东第二医科大学指南的 Web 版本，包含[指南本体LaTex版](https://github.com/SDSMU-Companion/sdsmu_welcome_tex)与[指南切片](https://github.com/SDSMU-Companion/sdsmu_welcome_tex)的全部内容。",
   "keywords": [
@@ -13,18 +13,18 @@
   "license": "MIT",
   "devDependencies": {
     "@mathjax/src": "^4.1.1",
+    "@node-rs/jieba": "2.0.1",
     "@vuepress/bundler-vite": "^2.0.0-rc.26",
     "@vuepress/client": "^2.0.0-rc.26",
     "@vuepress/plugin-markdown-ext": "^2.0.0-rc.125",
     "@vuepress/plugin-markdown-hint": "^2.0.0-rc.125",
     "@vuepress/plugin-markdown-math": "^2.0.0-rc.125",
     "@vuepress/plugin-markdown-stylize": "^2.0.0-rc.125",
-    "@vuepress/plugin-slimsearch": "^2.0.0-rc.125",
+    "@vuepress/plugin-slimsearch": "2.0.0-rc.121",
     "@vuepress/theme-default": "^2.0.0-rc.125",
     "sass-embedded": "^1.97.3",
     "vuepress": "^2.0.0-rc.26",
-    "vuepress-plugin-md-enhance": "^2.0.0-rc.103",
-    "@node-rs/jieba": "^2.0.1"
+    "vuepress-plugin-md-enhance": "2.0.0-rc.103"
   },
   "scripts": {
     "docs:dev": "vuepress dev md_files",

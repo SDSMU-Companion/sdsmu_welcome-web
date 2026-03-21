@@ -89,7 +89,7 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 - 双击 `WORKPLACE.code-workspace` 以打开 VSCode 工作区
 - 开始编辑
 - 本地运行
-  1. 打开“终端”，首次运行需先输入 `npm install package.json` 安装依赖（移动目录后需要先移除之前 `.vuepress/.cache` 文件夹，再在项目根目录下 `npm install package.json`，否则会报错）
+  1. 打开“终端”，首次运行需先输入 `npm init;npm install` 安装依赖（移动目录后需要先移除之前 `.vuepress/.cache` 文件夹，再在项目根目录下 `npm install`，否则会报错）
   2. 本地预览修改后的文件 `npm run docs:dev`
   3. 本地构建 `npm run docs:build`
 - 上传修改后的文件到 GitHub 仓库

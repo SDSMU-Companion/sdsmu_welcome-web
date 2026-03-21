@@ -35,7 +35,9 @@
             "editor.defaultFormatter": "vscode.typescript-language-features"
         },
         "[json]": {
-            "editor.defaultFormatter": "vscode.json-language-features"
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "editor.formatOnPaste": false,
+            "editor.formatOnSave": false
         },
         "[markdown]": {
             "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
@@ -56,6 +58,7 @@
         "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
         "editor.fontFamily": "Sarasa Mono SC, Noto Sans Mono CJK SC, Noto Sans CJK SC, Maple Mono NL NF CN, Microsoft YaHei, Noto Color Emoji",
         "editor.fontSize": 16,
+        "editor.formatOnSave": true,
         "editor.formatOnType": true,
         "editor.guides.bracketPairs": true,
         "editor.renderWhitespace": "all",
