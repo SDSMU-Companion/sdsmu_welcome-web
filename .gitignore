@@ -45,3 +45,4 @@ md_files/markdown-examples.md
 md_files/.vuepress/dist
 
 *.7z
+*.diff
