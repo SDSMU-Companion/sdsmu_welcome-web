@@ -9,7 +9,9 @@
             "donjayamanne.githistory",
             "ecmel.vscode-html-css",
             "esbenp.prettier-vscode",
-            "mhutchie.git-graph"
+            "mhutchie.git-graph",
+            "miguelsolorio.fluent-icons",
+            "PKief.material-icon-theme"
         ],
         "unwantedRecommendations": [
             "ms-vscode-remote.remote-containers",
@@ -115,5 +117,7 @@
         },
         "window.autoDetectColorScheme": true,
         "workbench.editor.empty.hint": "hidden",
+        "workbench.iconTheme": "material-icon-theme",
+        "workbench.productIconTheme": "fluent-icons"
     }
 }
