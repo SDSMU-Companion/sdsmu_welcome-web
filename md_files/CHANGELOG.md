@@ -4,9 +4,14 @@ title: 更新日志（现 Web 版本）
 
 <!-- 不要忘记更新版本号（在 package.json 中） -->
 
+## 2026.03.29
+
+1. 更新了生活费推荐标准
+2. 更新了README.md的说明
+
 ## 2026.03.21
 
-1. 再次修复搜索，tmd怎么还有bug啊
+1. 再次修复搜索，tmd怎么还有bug啊，现在没了，警告后人，勿升级 `@vuepress/plugin-slimsearch` 到 `2.0.0-rc.124` 及以上版本，要是[此issue](https://github.com/vuepress/ecosystem/issues/653)被close as completed再考虑更新依赖>
 2. 成功交接
 3. 更新校园邮箱步骤
 4. 更新四六级搜索词

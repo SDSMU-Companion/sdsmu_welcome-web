@@ -45,7 +45,7 @@ The code of this project is licensed under [MIT LICENSE](./LICENSE-MIT), and the
 2. 提示块
 
     ```markdown
-    ::: 以下几项根据情况选择
+    ::: 此处需根据具体情况从以下几项中选择
     文字
     :::
     ```
